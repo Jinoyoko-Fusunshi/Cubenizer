@@ -1,4 +1,0 @@
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ -G Ninja -S /home/jinoyoko/Repos/Cubenizer -B /home/jinoyoko/Repos/Cubenizer/cubenizer-release-gcc
--- Configuring done
--- Generating done
--- Build files have been written to: /home/jinoyoko/Repos/Cubenizer/cubenizer-release-gcc

@@ -1,3 +1,0 @@
-/home/jinoyoko/Repos/Cubenizer/cubenizer-debug-gcc/CMakeFiles/Cubenizer.dir
-/home/jinoyoko/Repos/Cubenizer/cubenizer-debug-gcc/CMakeFiles/edit_cache.dir
-/home/jinoyoko/Repos/Cubenizer/cubenizer-debug-gcc/CMakeFiles/rebuild_cache.dir
