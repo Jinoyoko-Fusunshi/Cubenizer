@@ -1,5 +1,5 @@
 #include <malloc.h>
-#include "Set.h"
+#include "Set.hpp"
 
 Pair* CreatePair(uint32_t id, void* data) {
     Pair *pair = (Pair*)malloc(sizeof (Pair));

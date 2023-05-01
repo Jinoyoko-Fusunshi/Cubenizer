@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <GL/glew.h>
-#include "Window.h"
+#include "Window.hpp"
 
 void PrintGLFWError();
 

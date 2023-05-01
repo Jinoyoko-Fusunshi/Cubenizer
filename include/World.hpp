@@ -1,7 +1,7 @@
 #include <stdint-gcc.h>
-#include "List.h"
-#include "Model.h"
-#include "Camera.h"
+#include "List.hpp"
+#include "Model.hpp"
+#include "Camera.hpp"
 
 typedef struct World {
     uint32_t tiles_width;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector.h"
+#include "Vector.hpp"
 
 typedef struct {
     Vector3f position;

@@ -1,14 +1,16 @@
 #pragma once
 
-#include "Vector.h"
-#include "Matrix.h"
-#include "Geometry.h"
-#include "ShaderProgram.h"
-#include "ShaderUnit.h"
-#include "Set.h"
+#include <vector>
+
+#include "Vector.hpp"
+#include "Matrix.hpp"
+#include "Geometry.hpp"
+#include "ShaderProgram.hpp"
+#include "ShaderUnit.hpp"
+#include "Set.hpp"
 
 typedef struct RenderingSystem {
-    List shaders;
+    std::vector<GLuint> shaders;
     Set geometry_objects;
 } RenderingSystem;
 

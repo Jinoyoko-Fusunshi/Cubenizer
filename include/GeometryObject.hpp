@@ -1,8 +1,8 @@
 #pragma once
 
 #include <GL/glew.h>
-#include "Geometry.h"
-#include "Rendering.h"
+#include "Geometry.hpp"
+#include "Rendering.hpp"
 
 typedef struct GeometryObject {
     GLuint vao_id;

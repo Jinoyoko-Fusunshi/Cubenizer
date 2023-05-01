@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint-gcc.h>
-#include "Vector.h"
+#include "Vector.hpp"
 
 typedef struct GeometryData {
     uint32_t vertices_length;

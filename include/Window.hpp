@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include "List.h"
+#include "List.hpp"
 
 typedef struct RenderWindow{
     uint32_t width;

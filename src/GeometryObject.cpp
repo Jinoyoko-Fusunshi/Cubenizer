@@ -1,5 +1,5 @@
 #include <malloc.h>
-#include "GeometryObject.h"
+#include "GeometryObject.hpp"
 
 void ConvertToVertexData(GeometryData *geometry_reference, VertexData *vertex_data_reference);
 

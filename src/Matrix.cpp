@@ -1,5 +1,5 @@
 #include <math.h>
-#include "Matrix.h"
+#include "Matrix.hpp"
 
 void InitMatrix(Matrix4f *matrix_reference) {
     matrix_reference->elements[0] = 1.0f;

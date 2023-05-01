@@ -1,14 +1,17 @@
+#include <vector>
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <GLFW/glfw3.h>
 
-#include "List.h"
-#include "Model.h"
-#include "ShaderUnit.h"
-#include "Camera.h"
-#include "Window.h"
-#include "World.h"
-#include "Rendering.h"
+#include "List.hpp"
+#include "Model.hpp"
+#include "ShaderUnit.hpp"
+#include "Camera.hpp"
+#include "Window.hpp"
+#include "World.hpp"
+#include "Rendering.hpp"
+
+using std::vector;
 
 void PrintGLFWError();
 void InitRenderingSystem();
@@ -49,22 +52,17 @@ void InitRenderingSystem() {
 }
 
 void CreateShaders() {
-    List shader_infos = {};
-    InitList(&shader_infos);
+    vector<ShaderInformation> shader_infos {
+        {"vertex.glsl", GL_VERTEX_SHADER},
+        {"fragment.glsl", GL_FRAGMENT_SHADER}
+    };
 
-    ShaderInformation vertex_info = {"vertex.glsl", GL_VERTEX_SHADER};
-    ShaderInformation fragment_info = {"fragment.glsl", GL_FRAGMENT_SHADER};
-    AddListEntry(&shader_infos, &vertex_info);
-    AddListEntry(&shader_infos, &fragment_info);
-
-    GLuint program_id = CreateShaderProgram(&shader_infos);
-    DeleteList(&shader_infos);
-
-    AddListEntry(&render_system.shaders, (void*)program_id);
+    GLuint program_id = CreateShaderProgram(shader_infos);
+    render_system.shaders.emplace_back(program_id);
 }
 
 void InitModels() {
-    GLuint program = (GLuint)GetListEntry(&render_system.shaders, 0);
+    GLuint program = render_system.shaders[0];
     Pair *found_pair = GetPairById(&render_system.geometry_objects, Cube);
     GeometryObject *object = (GeometryObject*)found_pair->data;
 
@@ -123,5 +121,5 @@ void DrawScreen(RenderWindow *window_reference) {
 }
 
 void DestroyRenderSystem() {
-    DeleteList(&render_system.shaders);
+
 }

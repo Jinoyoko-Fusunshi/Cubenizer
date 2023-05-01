@@ -1,12 +1,11 @@
 #include <malloc.h>
-#include "Rendering.h"
-#include "Model.h"
+#include "Rendering.hpp"
+#include "Model.hpp"
 
 GeometryObject* CreateCube(RenderingSystem *render_system_reference);
 
 RenderingSystem CreateRenderingSystem() {
     RenderingSystem render_system = {};
-    InitList(&render_system.shaders);
     InitSet(&render_system.geometry_objects);
 
     GeometryObject *cube = CreateCube(&render_system);
@@ -108,7 +107,7 @@ GeometryObject* CreateCube(RenderingSystem *render_system_reference) {
 }
 
 Vector3f* AllocateVectors(Vector3f *vectors_reference, uint32_t vectors_length) {
-    Vector3f *vertices = malloc(vectors_length * sizeof(Vector3f));
+    Vector3f *vertices = (Vector3f*)malloc(vectors_length * sizeof(Vector3f));
 
     for (uint32_t i = 0; i < vectors_length; i++)
         vertices[i] = vectors_reference[i];

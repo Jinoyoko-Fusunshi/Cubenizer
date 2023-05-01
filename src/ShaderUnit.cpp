@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include <malloc.h>
 #include <string.h>
+#include <vector>
 
-#include "Common.h"
-#include "ShaderUnit.h"
+#include "Common.hpp"
+#include "ShaderUnit.hpp"
+
+using std::vector;
 
 GLuint CreateShaderUnit(const char *shader_path, GLenum shader_type) {
     FILE *shader_file = fopen(shader_path, "rb");
@@ -39,20 +41,15 @@ GLuint CreateShaderUnit(const char *shader_path, GLenum shader_type) {
     return shader_unit;
 }
 
-GLuint CreateShaderProgram(List *shader_infos_reference) {
-    List shader_units;
-    InitList(&shader_units);
-
+GLuint CreateShaderProgram(vector<ShaderInformation> &shader_infos_reference) {
+    vector<GLuint> shader_units {};
     GLuint program_id = glCreateProgram();
 
-    for (uint32_t i = 0; i < shader_infos_reference->size; i++) {
-        ShaderInformation information = *(ShaderInformation*)GetListEntry(shader_infos_reference, i);
-
-        GLuint* shader_unit = (GLuint*)(malloc(1 * sizeof(GLuint)));
-        *shader_unit = CreateShaderUnit(information.source_path, information.shader_type);
-        AddListEntry(&shader_units, (void*)shader_unit);
-
-        glAttachShader(program_id, *shader_unit);
+    for (uint32_t i = 0; i < shader_infos_reference.size(); i++) {
+        ShaderInformation information = shader_infos_reference[i];
+        GLuint shader = CreateShaderUnit(information.source_path, information.shader_type);
+        shader_units.emplace_back(shader);
+        glAttachShader(program_id, shader);
     }
 
     glLinkProgram(program_id);
@@ -67,12 +64,10 @@ GLuint CreateShaderProgram(List *shader_infos_reference) {
         printf("Shader program linker error: %s", error_message);
     }
 
-    for (uint32_t i = 0; i < shader_units.size; i++) {
-        GLuint *shader_unit = (GLuint*)GetListEntry(&shader_units, i);
-        glDeleteShader(*shader_unit);
+    for (uint32_t i = 0; i < shader_units.size(); i++) {
+        GLuint shader = shader_units[i];
+        glDeleteShader(shader);
     }
-
-    DeleteListWithAllocations(&shader_units);
 
     return program_id;
 }

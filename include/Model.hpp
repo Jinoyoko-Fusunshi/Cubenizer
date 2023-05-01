@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Vector.h"
-#include "ShaderProgram.h"
-#include "Matrix.h"
-#include "GeometryObject.h"
+#include "Vector.hpp"
+#include "ShaderProgram.hpp"
+#include "Matrix.hpp"
+#include "GeometryObject.hpp"
 
 typedef struct {
     Vector3f position;

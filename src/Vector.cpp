@@ -1,4 +1,4 @@
-#include "Vector.h"
+#include "Vector.hpp"
 
 Vector3f AddVector(Vector3f first, Vector3f second) {
     Vector3f sum = {

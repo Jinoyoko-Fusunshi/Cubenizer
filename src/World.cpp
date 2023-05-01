@@ -1,5 +1,5 @@
-#include "World.h"
-#include "Camera.h"
+#include "World.hpp"
+#include "Camera.hpp"
 
 Matrix4f projection;
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint-gcc.h>
-#include "Vector.h"
+#include "Vector.hpp"
 
 #define MATRIX_DIMENSION 4
 

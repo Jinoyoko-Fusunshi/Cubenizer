@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
-#include "List.h"
+#include "List.hpp"
 
 Node* CreateNode(void* entry_data);
 void DeleteNode(Node *node_reference, bool hasAllocatedMemory);

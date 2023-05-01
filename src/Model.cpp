@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "Model.h"
-#include "Geometry.h"
-#include "Rendering.h"
+#include "Model.hpp"
+#include "Geometry.hpp"
+#include "Rendering.hpp"
 
 Model* CreateModel(GeometryObject *object_reference_reference, GLuint program_id, Vector3f position) {
     ShaderProgram program = {
