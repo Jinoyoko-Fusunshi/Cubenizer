@@ -2,9 +2,15 @@
 
 #include "Vector.hpp"
 
-typedef struct {
-    Vector3f position;
-} Camera;
+class Camera{
+private:
+    Vector3F position;
 
+public:
+    Camera() : position(Vector3F()) {}
+    explicit Camera(Vector3F position) : position(position) {}
 
-void TranslateCamera(Camera *camera_reference, Vector3f translation_vector);
+    void TranslateCamera(Vector3F translation_vector);
+
+    Vector3F &GetPosition() { return position; };
+};

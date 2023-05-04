@@ -1,23 +1,30 @@
 #pragma once
 
 #include <vector>
-
+#include <map>
 #include "Vector.hpp"
 #include "Matrix.hpp"
 #include "Geometry.hpp"
 #include "ShaderProgram.hpp"
 #include "ShaderUnit.hpp"
-#include "Set.hpp"
+#include "GeometryObject.hpp"
 
-typedef struct RenderingSystem {
-    std::vector<GLuint> shaders;
-    Set geometry_objects;
-} RenderingSystem;
+class RenderingSystem {
+private:
+    std::vector<ShaderProgram> shaders_programs;
+    std::map<uint32_t, GeometryObject> geometry_objects;
 
-RenderingSystem CreateRenderingSystem();
-Vector3f* AllocateVectors(Vector3f *vectors_reference, uint32_t vectors_length);
+public:
+    RenderingSystem();
+    ~RenderingSystem() = default;
+    void CreateShaders();
+
+    std::vector<ShaderProgram>& GetShadersReference() { return shaders_programs; }
+    std::map<uint32_t, GeometryObject>& GetGeometryObjectsReference() { return geometry_objects; }
+};
+
 GLuint CreateVertexArrayObject();
 GLuint CreateVertexBufferObject();
 
-void SetVector3fUniformData(GLuint program_id, const char* uniform_name, Vector3f *data_reference);
-void SetMatrix4fUniformData(GLuint program_id, const char* uniform_name, Matrix4f *data_reference);
+void SetVector3fUniformData(GLuint program_id, const char* uniform_name, Vector3F &data_reference);
+void SetMatrix4fUniformData(GLuint program_id, const char* uniform_name, Matrix4F &data_reference);

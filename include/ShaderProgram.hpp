@@ -3,6 +3,6 @@
 #include <GL/glew.h>
 #include "Geometry.hpp"
 
-typedef struct {
+struct ShaderProgram {
     GLuint program_id;
-} ShaderProgram;
+};

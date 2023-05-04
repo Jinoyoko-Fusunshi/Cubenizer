@@ -1,142 +1,144 @@
-#include <malloc.h>
+#include <vector>
+#include <GL/glew.h>
 #include "Rendering.hpp"
 #include "Model.hpp"
 
-GeometryObject* CreateCube(RenderingSystem *render_system_reference);
+using std::vector;
 
-RenderingSystem CreateRenderingSystem() {
-    RenderingSystem render_system = {};
-    InitSet(&render_system.geometry_objects);
+GeometryObject CreateCube();
 
-    GeometryObject *cube = CreateCube(&render_system);
-    AddPair(&render_system.geometry_objects, 0, (void*)cube);
+RenderingSystem::RenderingSystem() {
+    GeometryObject obj = CreateCube();
 
-    return render_system;
+    geometry_objects.insert({0, obj});
 }
 
-GeometryObject* CreateCube(RenderingSystem *render_system_reference) {
-    Vector3f vertices[36] = {
-        {0.0f, 0.0f, 0.0f},
-        {0.0f,  1.0f, 0.0f},
-        {1.0f, 1.0f, 0.0f},
-        {1.0f, 1.0f, 0.0f},
-        {1.0f,  0.0f, 0.0f},
-        {0.0f, 0.0f, 0.0f},
-
-        {1.0f, 0.0f, 0.0f},
-        {1.0f,  1.0f, 0.0f},
-        {1.0f, 1.0f, -1.0f},
-        {1.0f, 1.0f, -1.0f},
-        {1.0f,  0.0f, -1.0f},
-        {1.0f, 0.0f, 0.0f},
-
-        {0.0f, 0.0f, 0.0f},
-        {0.0f,  1.0f, 0.0f},
-        {0.0f, 1.0f, -1.0f},
-        {0.0f, 1.0f, -1.0f},
-        {0.0f,  0.0f, -1.0f},
-        {0.0f, 0.0f, 0.0f},
-
-        {0.0f, 0.0f, -1.0f},
-        {1.0f, 1.0f, -1.0f},
-        {0.0f,  1.0f, -1.0f},
-        {0.0f, 0.0f, -1.0f},
-        {1.0f,  0.0f, -1.0f},
-        {1.0f, 1.0f, -1.0f},
-
-        {0.0f, 1.0f, 0.0f},
-        {0.0f,  1.0f, -1.0f},
-        {1.0f, 1.0f, -1.0f},
-        {1.0f, 1.0f, -1.0f},
-        {1.0f,  1.0f, 0.0f},
-        {0.0f, 1.0f, 0.0f},
-
-        {0.0f, 0.0f, 0.0f},
-        {0.0f,  0.0f, -1.0f},
-        {1.0f, 0.0f, -1.0f},
-        {1.0f, 0.0f, -1.0f},
-        {1.0f,  0.0f, 0.0f},
-        {0.0f, 0.0f, 0.0f},
-    };
-    Vector3f normals[36] = {
-        {0.0f, 0.0f, 1.0f},
-        {0.0f,  0.0f, 1.0f},
-        {0.0f, 0.0f, 1.0f},
-        {0.0f, 0.0f, 1.0f},
-        {0.0f,  0.0f, 1.0f},
-        {0.0f, 0.0f, 1.0f},
-
-        {1.0f, 0.0f, 0.0f},
-        {1.0f,  0.0f, 0.0f},
-        {1.0f, 0.0f, 0.0f},
-        {1.0f, 0.0f, 0.0f},
-        {1.0f,  0.0f, 0.0f},
-        {1.0f, 0.0f, 0.0f},
-
-        {-1.0f, 0.0f, 0.0f},
-        {-1.0f,  0.0f, 0.0f},
-        {-1.0f, 0.0f, 0.0f},
-        {-1.0f, 0.0f, 0.0f},
-        {-1.0f,  0.0f, 0.0f},
-        {-1.0f, 0.0f, 0.0f},
-
-        {0.0f, 0.0f, -1.0f},
-        {0.0f,  0.0f, -1.0f},
-        {0.0f, 0.0f, -1.0f},
-        {0.0f, 0.0f, -1.0f},
-        {0.0f,  0.0f, -1.0f},
-        {0.0f, 0.0f, -1.0f},
-
-        {0.0f, 1.0f, 0.0f},
-        {0.0f,  1.0f, 0.0f},
-        {0.0f, 1.0f, 0.0f},
-        {0.0f, 1.0f, 0.0f},
-        {0.0f,  1.0f, 0.0f},
-        {0.0f, 1.0f, 0.0f},
-
-        {0.0f, -1.0f, 0.0f},
-        {0.0f,  -1.0f, 0.0f},
-        {0.0f, -1.0f, 0.0f},
-        {0.0f, -1.0f, 0.0f},
-        {0.0f,  -1.0f, 0.0f},
-        {0.0f, -1.0f, 0.0f},
+void RenderingSystem::CreateShaders() {
+    vector<ShaderInformation> shader_infos {
+        {"vertex.glsl", GL_VERTEX_SHADER},
+        {"fragment.glsl", GL_FRAGMENT_SHADER}
     };
 
-    GeometryData geometry = {36, AllocateVectors(vertices, 36), AllocateVectors(normals, 36)};
-    return CreateGeometryObject(&geometry);
+    GLuint program_id = CreateShaderProgram(shader_infos);
+    shaders_programs.emplace_back(program_id);
 }
 
-Vector3f* AllocateVectors(Vector3f *vectors_reference, uint32_t vectors_length) {
-    Vector3f *vertices = (Vector3f*)malloc(vectors_length * sizeof(Vector3f));
+GeometryObject CreateCube() {
+    auto *vertices = new Vector3F[36] {
+        {0.0, 0.0, 0.0},
+        {0.0, 1.0, 0.0},
+        {1.0, 1.0, 0.0},
+        {1.0, 1.0, 0.0},
+        {1.0,  0.0, 0.0},
+        {0.0, 0.0, 0.0f},
 
-    for (uint32_t i = 0; i < vectors_length; i++)
-        vertices[i] = vectors_reference[i];
+        {1.0, 0.0, 0.0},
+        {1.0,  1.0, 0.0},
+        {1.0, 1.0, -1.0},
+        {1.0, 1.0, -1.0},
+        {1.0,  0.0, -1.0},
+        {1.0, 0.0, 0.0},
 
-    return vertices;
+        {0.0, 0.0, 0.0},
+        {0.0,  1.0, 0.0},
+        {0.0, 1.0, -1.0},
+        {0.0, 1.0, -1.0},
+        {0.0,  0.0, -1.0},
+        {0.0, 0.0, 0.0},
+
+        {0.0, 0.0, -1.0},
+        {1.0, 1.0, -1.0},
+        {0.0,  1.0, -1.0},
+        {0.0, 0.0, -1.0},
+        {1.0,  0.0, -1.0},
+        {1.0, 1.0, -1.0},
+
+        {0.0, 1.0, 0.0},
+        {0.0,  1.0, -1.0},
+        {1.0, 1.0, -1.0},
+        {1.0, 1.0, -1.0},
+        {1.0,  1.0, 0.0},
+        {0.0, 1.0, 0.0},
+
+        {0.0, 0.0, 0.0},
+        {0.0,  0.0, -1.0},
+        {1.0, 0.0, -1.0},
+        {1.0, 0.0, -1.0},
+        {1.0,  0.0, 0.0},
+        {0.0, 0.0, 0.0},
+    };
+
+    auto *normals = new Vector3F[36] {
+        {0.0, 0.0, 1.0},
+        {0.0,  0.0, 1.0},
+        {0.0, 0.0, 1.0},
+        {0.0, 0.0, 1.0},
+        {0.0,  0.0, 1.0},
+        {0.0, 0.0, 1.0},
+
+        {1.0, 0.0, 0.0},
+        {1.0,  0.0, 0.0},
+        {1.0, 0.0, 0.0},
+        {1.0, 0.0, 0.0},
+        {1.0,  0.0, 0.0},
+        {1.0, 0.0, 0.0},
+
+        {-1.0, 0.0, 0.0},
+        {-1.0,  0.0, 0.0},
+        {-1.0, 0.0, 0.0},
+        {-1.0, 0.0, 0.0},
+        {-1.0,  0.0, 0.0},
+        {-1.0, 0.0, 0.0},
+
+        {0.0, 0.0, -1.0},
+        {0.0,  0.0, -1.0},
+        {0.0, 0.0, -1.0},
+        {0.0, 0.0, -1.0},
+        {0.0,  0.0, -1.0},
+        {0.0, 0.0, -1.0},
+
+        {0.0, 1.0, 0.0},
+        {0.0,  1.0, 0.0},
+        {0.0, 1.0, 0.0},
+        {0.0, 1.0, 0.0},
+        {0.0,  1.0, 0.0},
+        {0.0, 1.0, 0.0},
+
+        {0.0, -1.0, 0.0},
+        {0.0,  -1.0, 0.0},
+        {0.0, -1.0, 0.0},
+        {0.0, -1.0, 0.0},
+        {0.0, -1.0, 0.0},
+        {0.0, -1.0, 0.0},
+    };
+
+    GeometryData geometry = {36, vertices, normals};
+    GeometryObject object(geometry);
+    return object;
 }
 
 GLuint CreateVertexArrayObject() {
-    GLuint vao = 0;
+    GLuint vao = 0u;
     glGenVertexArrays(1, &vao);
     return vao;
 }
 
 GLuint CreateVertexBufferObject() {
-    GLuint vbo = 0;
+    GLuint vbo = 0u;
     glGenBuffers(1, &vbo);
     return vbo;
 }
 
-void SetVector3fUniformData(GLuint program_id, const char* uniform_name, Vector3f *data_reference) {
+void SetVector3fUniformData(GLuint program_id, const char* uniform_name, Vector3F &data_reference) {
     GLint id = glGetUniformLocation(program_id, uniform_name);
     glUseProgram(program_id);
-    glUniform3f(id, data_reference->x, data_reference->y, data_reference->z);
+    glUniform3f(id, data_reference.GetX(), data_reference.GetY(), data_reference.GetZ());
     glUseProgram(0);
 }
 
-void SetMatrix4fUniformData(GLuint program_id, const char* uniform_name, Matrix4f *data_reference) {
+void SetMatrix4fUniformData(GLuint program_id, const char* uniform_name, Matrix4F &data_reference) {
     GLint id = glGetUniformLocation(program_id, uniform_name);
     glUseProgram(program_id);
-    glProgramUniformMatrix4fv(program_id, id, 1, 0, data_reference->elements);
+    glProgramUniformMatrix4fv(program_id, id, 1, 0, data_reference.GetElements());
     glUseProgram(0);
 }

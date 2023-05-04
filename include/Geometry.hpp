@@ -3,8 +3,8 @@
 #include <stdint-gcc.h>
 #include "Vector.hpp"
 
-typedef struct GeometryData {
+struct GeometryData {
     uint32_t vertices_length;
-    Vector3f *vertices;
-    Vector3f *normals;
-} GeometryData;
+    Vector3F *vertices;
+    Vector3F *normals;
+};

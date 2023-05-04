@@ -1,21 +1,23 @@
-#include <stdint-gcc.h>
-#include "List.hpp"
+#include <vector>
 #include "Model.hpp"
 #include "Camera.hpp"
+#include "Rendering.hpp"
 
-typedef struct World {
-    uint32_t tiles_width;
-    uint32_t tiles_depth;
-    List models;
-    Camera camera;
-} World;
+class World {
+private:
+    uint32_t tiles_width = 0;
+    uint32_t tiles_depth = 0;
+    std::vector<Model> models {};
+    Camera camera {};
 
-World CreateWorld(uint32_t width, uint32_t height);
+    void DrawModels();
+public:
+    explicit World(uint32_t width, uint32_t depth);
+    ~World();
 
-void AddWorldTile(World *world_reference, Model *model_reference);
+    void InitModels(RenderingSystem &render_system);
+    void UpdateWorld();
+    void DrawWorld();
 
-void UpdateWorld(World *world_reference);
-
-void DrawWorld(World *world_reference);
-
-void DeleteWorld(World *world);
+    Camera& GetCamera() { return camera; }
+};

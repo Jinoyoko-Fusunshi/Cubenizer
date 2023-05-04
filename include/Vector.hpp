@@ -1,18 +1,52 @@
 #pragma once
 
-typedef struct {
-    float x;
-    float y;
-    float z;
-} Vector3f;
+#include "Common.hpp"
 
-typedef struct {
-    Vector3f vertex;
-    Vector3f normal;
-} VertexData;
+template<FloatType N>
+class Vector3 {
+private:
+    N x;
+    N y;
+    N z;
 
-Vector3f AddVector(Vector3f first, Vector3f second);
-Vector3f SubVector(Vector3f first, Vector3f second);
+public:
+    Vector3() : x(0), y(0), z(0) {}
+    Vector3(N x, N y, N z) : x(x), y(y), z(z) {}
+    ~Vector3() = default;
 
-void AddToVector(Vector3f* target_reference, Vector3f other);
-void SubOfVector(Vector3f* target_reference, Vector3f other);
+    N GetX() { return x; }
+    N GetY() { return y; }
+    N GetZ() { return z; }
+
+    Vector3<N> operator +(Vector3<N> other);
+    void operator +=(Vector3<N> other);
+    Vector3<N> operator -(Vector3<N> other);
+    void operator -=(Vector3<N> other);
+};
+
+template<FloatType N> Vector3<N> Vector3<N>::operator-(Vector3<N> other) {
+    return Vector3<N>(this->x - other.x, this->y - other.y, this->z - other.z);
+}
+
+template<FloatType N> void Vector3<N>::operator-=(Vector3<N> other) {
+    this->x -= other.x;
+    this->y -= other.y;
+    this->z -= other.z;
+}
+
+template<FloatType N> Vector3<N> Vector3<N>::operator+(Vector3<N> other) {
+    return Vector3<N>(this->x + other.x, this->y + other.y, this->z + other.z);
+}
+
+template<FloatType N> void Vector3<N>::operator+=(Vector3<N> other) {
+    this->x += other.x;
+    this->y += other.y;
+    this->z += other.z;
+}
+
+typedef Vector3<float> Vector3F;
+
+struct VertexData{
+    Vector3F vertex;
+    Vector3F normal;
+};

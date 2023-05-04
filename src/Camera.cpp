@@ -1,5 +1,5 @@
 #include "Camera.hpp"
 
-void TranslateCamera(Camera *camera_reference, Vector3f translation_vector) {
-    AddToVector(&camera_reference->position, translation_vector);
+void Camera::TranslateCamera(Vector3F translation_vector) {
+    position += translation_vector;
 }

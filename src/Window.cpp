@@ -2,10 +2,13 @@
 #include <GL/glew.h>
 #include "Window.hpp"
 
+using std::string;
+
 void PrintGLFWError();
 
-RenderWindow CreateWindow(const char *window_title, uint32_t width, uint32_t height) {
-    RenderWindow window;
+RenderWindow::RenderWindow(const string& window_title, uint32_t width, uint32_t height) {
+    this->width = width;
+    this->height = height;
 
     if (!glfwInit())
         PrintGLFWError();
@@ -15,7 +18,7 @@ RenderWindow CreateWindow(const char *window_title, uint32_t width, uint32_t hei
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *handle = glfwCreateWindow((int)width, (int)height, window_title, 0, 0);
+    handle = glfwCreateWindow((int)width, (int)height, window_title.c_str(), nullptr, nullptr);
 
     if(!handle)
         PrintGLFWError();
@@ -27,21 +30,10 @@ RenderWindow CreateWindow(const char *window_title, uint32_t width, uint32_t hei
         const char *error_message = (char*)glewGetErrorString(status);
         printf("GL Error: %s", error_message);
     }
-
-    window.width = width;
-    window.height = height;
-    window.handle = handle;
-
-    return window;
 }
 
 void PrintGLFWError() {
     const char *error_message;
     glfwGetError(&error_message);
     printf("GLFW Error: %s", error_message);
-}
-
-void DeleteWindow(RenderWindow *window_reference) {
-    glfwDestroyWindow(window_reference->handle);
-    glfwTerminate();
 }
