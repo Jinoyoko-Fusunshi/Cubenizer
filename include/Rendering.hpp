@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <map>
-#include "Vector.hpp"
+#include "Vector3.hpp"
 #include "Matrix.hpp"
 #include "Geometry.hpp"
 #include "ShaderProgram.hpp"

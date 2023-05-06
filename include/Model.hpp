@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector.hpp"
+#include "Vector3.hpp"
 #include "ShaderProgram.hpp"
 #include "Matrix.hpp"
 #include "GeometryObject.hpp"
