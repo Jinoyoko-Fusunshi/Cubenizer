@@ -3,11 +3,7 @@
 #include <GL/glew.h>
 #include "Geometry.hpp"
 
-enum GeometryObjectIndices {
-    Cube = 0
-};
-
-class GeometryObject {
+class GeometryMesh {
 private:
     GLuint vao_id = 0;
     GLuint vbo_id = 0;

@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "MeshTypes.hpp"
 
 Matrix4F projection;
 
@@ -12,7 +13,8 @@ World::~World() = default;
 
 void World::InitModels(RenderingSystem &render_system) {
     ShaderProgram program = render_system.GetShadersReference()[0];
-    GeometryObject object = render_system.GetGeometryObjectsReference()[0];
+    GeometryMesh object = render_system.GetMeshByType(MeshTypes::Cube);
+    Texture texture = render_system.GetTextureByType(TextureTypes::Troll);
 
     for (uint32_t z = 0; z < tiles_depth; z++) {
         for (uint32_t x = 0; x < tiles_width; x++) {

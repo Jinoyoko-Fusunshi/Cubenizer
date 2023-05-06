@@ -45,8 +45,3 @@ template<FloatType N> void Vector3<N>::operator+=(Vector3<N> other) {
 }
 
 typedef Vector3<float> Vector3F;
-
-struct VertexData{
-    Vector3F vertex;
-    Vector3F normal;
-};
