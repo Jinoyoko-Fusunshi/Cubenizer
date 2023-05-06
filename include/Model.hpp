@@ -10,10 +10,10 @@
 class Model {
 private:
     Vector3F position {};
+    Vector3F color {};
     Texture texture {};
     GeometryMesh geometry {};
     ShaderProgram shader {};
-    Vector3F color {};
 
 public:
     explicit Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
