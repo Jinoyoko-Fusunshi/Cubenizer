@@ -1,21 +1,18 @@
 #pragma once
 
 #include "Common.hpp"
+#include "Vector2.hpp"
 
 template<FloatType N>
-class Vector3 {
-private:
-    N x;
-    N y;
-    N z;
+class Vector3 final : public Vector2<N> {
+protected:
+    N z = 0.0;
 
 public:
-    Vector3() : x(0), y(0), z(0) {}
-    Vector3(N x, N y, N z) : x(x), y(y), z(z) {}
+    Vector3() : Vector2<N>(), z(0) {}
+    explicit Vector3(N x, N y, N z) : Vector2<N>(x, y), z(z) {}
     ~Vector3() = default;
 
-    N GetX() { return x; }
-    N GetY() { return y; }
     N GetZ() { return z; }
 
     Vector3<N> operator +(Vector3<N> other);

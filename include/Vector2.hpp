@@ -4,13 +4,13 @@
 
 template<FloatType N>
 class Vector2 {
-private:
-    N x;
-    N y;
+protected:
+    N x = 0.0;
+    N y = 0.0;
 
 public:
     Vector2() : x(0), y(0) {}
-    Vector2(N x, N y) : x(x), y(y) {}
+    explicit Vector2(N x, N y) : x(x), y(y) {}
     ~Vector2() = default;
 
     N GetX() { return x; }
