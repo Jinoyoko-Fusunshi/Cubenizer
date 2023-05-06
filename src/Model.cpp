@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "Model.hpp"
-#include "Geometry.hpp"
 #include "Rendering.hpp"
+#include "VertexData.hpp"
 
 Model::Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference)
     : position(position), geometry(geometry_object_reference), shader(shader_reference), texture(texture_reference) {

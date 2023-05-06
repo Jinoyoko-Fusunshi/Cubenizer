@@ -8,7 +8,7 @@
 
 using std::vector, std::string;
 
-GeometryObject CreateCube();
+GeometryMesh CreateCube();
 
 RenderingSystem::RenderingSystem() {
     GeometryMesh obj = CreateCube();
@@ -49,7 +49,7 @@ void RenderingSystem::CreateShaders() {
     shader_infos.clear();
 }
 
-GeometryObject CreateCube() {
+GeometryMesh CreateCube() {
     auto *vertices = new Vector3F[36] {
         {0.0, 0.0, 0.0},
         {0.0, 1.0, 0.0},

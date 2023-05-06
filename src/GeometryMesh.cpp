@@ -4,7 +4,7 @@
 
 void ConvertToVertexData(GeometryData &geometry_reference, VertexData *vertex_data_reference);
 
-GeometryObject::GeometryObject(GeometryData &geometry_data) {
+GeometryMesh::GeometryMesh(GeometryData &geometry_data) {
     VertexData vertex_data[geometry_data.vertices_length];
     vao_id = RenderingSystem::CreateVertexArrayObject();
     vbo_id = RenderingSystem::CreateVertexBufferObject();
@@ -24,6 +24,11 @@ GeometryObject::GeometryObject(GeometryData &geometry_data) {
 
     delete[] geometry_data.vertices;
     delete[] geometry_data.normals;
+}
+
+void GeometryMesh::Destroy() {
+    glDeleteBuffers(1, &vbo_id);
+    glDeleteVertexArrays(1, &vao_id);
 }
 
 void ConvertToVertexData(GeometryData &geometry_reference, VertexData *vertex_data_reference) {

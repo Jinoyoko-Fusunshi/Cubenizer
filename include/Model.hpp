@@ -18,7 +18,6 @@ private:
 public:
     explicit Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
     ~Model() = default;
-    explicit Model(GeometryObject &geometry_object_reference, ShaderProgram shader_program, Vector3F position);
 
     void UpdateProjectionMatrix(Matrix4F &projection_matrix);
     void UpdateModelPosition();

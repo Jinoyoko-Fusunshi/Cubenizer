@@ -10,9 +10,11 @@ private:
     uint32_t vertices_length = 0;
 
 public:
-    GeometryObject() = default;
-    explicit GeometryObject(GeometryData &geometry_data);
-    ~GeometryObject() = default;
+    GeometryMesh() = default;
+    explicit GeometryMesh(GeometryData &geometry_data);
+    ~GeometryMesh() = default;
+
+    void Destroy();
 
     uint32_t GetVerticesSize() { return vertices_length; }
     GLuint GetVAO() { return vao_id; }
