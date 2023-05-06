@@ -2,7 +2,7 @@
 
 #include "Vector3.hpp"
 #include "ShaderProgram.hpp"
-#include "Matrix.hpp"
+#include "Matrix4.hpp"
 #include "GeometryMesh.hpp"
 #include "Texture.hpp"
 #include "TextureTypes.hpp"

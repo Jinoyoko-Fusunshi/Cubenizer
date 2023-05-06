@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include "Vector3.hpp"
-#include "Matrix.hpp"
+#include "Matrix4.hpp"
 #include "Geometry.hpp"
 #include "ShaderProgram.hpp"
 #include "ShaderUnit.hpp"
@@ -29,6 +29,7 @@ public:
 
     static GLuint CreateVertexArrayObject();
     static GLuint CreateVertexBufferObject();
+    static GLuint CreateElementBuffer();
 };
 
 void SetVector3fUniformData(GLuint program_id, const std::string& uniform_name, Vector3F &data_reference);
