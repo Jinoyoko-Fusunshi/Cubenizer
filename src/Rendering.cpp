@@ -31,7 +31,10 @@ RenderingSystem::~RenderingSystem() {
     }
     geometry_textures.clear();
 
-    geometry_objects.insert({0, obj});
+    for (auto shader : shaders_programs)
+        shader.Destroy();
+
+    shaders_programs.clear();
 }
 
 void RenderingSystem::CreateShaders() {
@@ -42,6 +45,8 @@ void RenderingSystem::CreateShaders() {
 
     GLuint program_id = CreateShaderProgram(shader_infos);
     shaders_programs.emplace_back(program_id);
+
+    shader_infos.clear();
 }
 
 GeometryObject CreateCube() {
@@ -68,11 +73,11 @@ GeometryObject CreateCube() {
         {0.0, 0.0, 0.0},
 
         {0.0, 0.0, -1.0},
+        {0.0, 1.0, -1.0},
+        {1.0,  1.0, -1.0},
         {1.0, 1.0, -1.0},
-        {0.0,  1.0, -1.0},
-        {0.0, 0.0, -1.0},
         {1.0,  0.0, -1.0},
-        {1.0, 1.0, -1.0},
+        {0.0, 0.0, -1.0},
 
         {0.0, 1.0, 0.0},
         {0.0,  1.0, -1.0},
@@ -104,19 +109,19 @@ GeometryObject CreateCube() {
         {1.0,  0.0, 0.0},
         {1.0, 0.0, 0.0},
 
-        {-1.0, 0.0, 0.0},
-        {-1.0,  0.0, 0.0},
-        {-1.0, 0.0, 0.0},
-        {-1.0, 0.0, 0.0},
-        {-1.0,  0.0, 0.0},
-        {-1.0, 0.0, 0.0},
+        {0.0, 0.0, -1.0},
+        {0.0, 0.0, -1.0},
+        {0.0, 0.0, -1.0},
+        {0.0, 0.0, -1.0},
+        {0.0, 0.0, -1.0},
+        {0.0, 0.0, -1.0},
 
-        {0.0, 0.0, -1.0},
-        {0.0,  0.0, -1.0},
-        {0.0, 0.0, -1.0},
-        {0.0, 0.0, -1.0},
-        {0.0,  0.0, -1.0},
-        {0.0, 0.0, -1.0},
+        {-1.0, 0.0, 0.0},
+        {-1.0,  0.0, 0.0},
+        {-1.0, 0.0, 0.0},
+        {-1.0, 0.0, 0.0},
+        {-1.0,  0.0, 0.0},
+        {-1.0, 0.0, 0.0},
 
         {0.0, 1.0, 0.0},
         {0.0,  1.0, 0.0},

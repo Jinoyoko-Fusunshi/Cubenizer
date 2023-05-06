@@ -57,8 +57,13 @@ GLuint CreateShaderProgram(vector<ShaderInformation> &shader_infos_reference) {
         printf("Shader program linker error: %s", error_message);
     }
 
-    for (unsigned int shader : shader_units)
+    for (GLuint shader : shader_units)
+        glDetachShader(program_id, shader);
+
+    for (GLuint shader : shader_units)
         glDeleteShader(shader);
+
+    shader_units.clear();
 
     return program_id;
 }

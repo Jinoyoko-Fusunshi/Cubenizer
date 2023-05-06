@@ -20,7 +20,7 @@ private:
 
 public:
     RenderingSystem();
-    ~RenderingSystem() = default;
+    ~RenderingSystem();
     void CreateShaders();
 
     std::vector<ShaderProgram>& GetShadersReference() { return shaders_programs; }
