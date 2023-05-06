@@ -6,7 +6,7 @@
 #include "TextureTypes.hpp"
 #include "MeshTypes.hpp"
 
-using std::vector;
+using std::vector, std::string;
 
 GeometryObject CreateCube();
 
@@ -193,27 +193,27 @@ GeometryObject CreateCube() {
     return object;
 }
 
-GLuint CreateVertexArrayObject() {
+GLuint RenderingSystem::CreateVertexArrayObject() {
     GLuint vao = 0u;
     glGenVertexArrays(1, &vao);
     return vao;
 }
 
-GLuint CreateVertexBufferObject() {
+GLuint RenderingSystem::CreateVertexBufferObject() {
     GLuint vbo = 0u;
     glGenBuffers(1, &vbo);
     return vbo;
 }
 
-void SetVector3fUniformData(GLuint program_id, const char* uniform_name, Vector3F &data_reference) {
-    GLint id = glGetUniformLocation(program_id, uniform_name);
+void SetVector3fUniformData(GLuint program_id, const string& uniform_name, Vector3F &data_reference) {
+    GLint id = glGetUniformLocation(program_id, uniform_name.c_str());
     glUseProgram(program_id);
     glUniform3f(id, data_reference.GetX(), data_reference.GetY(), data_reference.GetZ());
     glUseProgram(0);
 }
 
-void SetMatrix4fUniformData(GLuint program_id, const char* uniform_name, Matrix4F &data_reference) {
-    GLint id = glGetUniformLocation(program_id, uniform_name);
+void SetMatrix4fUniformData(GLuint program_id, const string& uniform_name, Matrix4F &data_reference) {
+    GLint id = glGetUniformLocation(program_id, uniform_name.c_str());
     glUseProgram(program_id);
     glProgramUniformMatrix4fv(program_id, id, 1, 0, data_reference.GetElements());
     glUseProgram(0);

@@ -13,29 +13,29 @@ Model::Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderP
 }
 
 void Model::UpdateProjectionMatrix(Matrix4F &projection_matrix) {
-    SetMatrix4fUniformData(shader.program_id, "projection", projection_matrix);
+    SetMatrix4fUniformData(shader.GetProgramID(), "projection", projection_matrix);
 }
 
 void Model::UpdateModelPosition() {
-    SetVector3fUniformData(shader.program_id, "model_position", position);
+    SetVector3fUniformData(shader.GetProgramID(), "model_position", position);
 }
 
 void Model::UpdateCameraPosition(Vector3F &cam_position) {
-    SetVector3fUniformData(shader.program_id, "camera_position", cam_position);
+    SetVector3fUniformData(shader.GetProgramID(), "camera_position", cam_position);
 }
 
 void Model::UpdateColor(Vector3F &color) {
-    SetVector3fUniformData(shader.program_id, "model_color", color);
+    SetVector3fUniformData(shader.GetProgramID(), "model_color", color);
 }
 
 void Model::UpdateFaces(int* face_ids, int face_length) {
-    GLint id = glGetUniformLocation(shader.program_id, "neighbour_indices");
-    glUseProgram(shader.program_id);
+    GLint id = glGetUniformLocation(shader.GetProgramID(), "neighbour_indices");
+    glUseProgram(shader.GetProgramID());
     glUniform1iv(id, face_length, face_ids);
 }
 
 void Model::DrawModel() {
-    glUseProgram(shader.program_id);
+    glUseProgram(shader.GetProgramID());
     glBindVertexArray(geometry.GetVAO());
     glBindBuffer(GL_ARRAY_BUFFER, geometry.GetVBO());
     glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());

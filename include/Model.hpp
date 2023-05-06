@@ -27,5 +27,5 @@ public:
     void UpdateFaces(int* face_ids, int face_length);
     void DrawModel();
 
-    Vector3F &GetColor() { return color; }
+    Vector3F& GetColor() { return color; }
 };

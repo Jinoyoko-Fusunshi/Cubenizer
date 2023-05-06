@@ -1,12 +1,13 @@
-#include "GeometryObject.hpp"
+#include "GeometryMesh.hpp"
 #include "Rendering.hpp"
+#include "VertexData.hpp"
 
 void ConvertToVertexData(GeometryData &geometry_reference, VertexData *vertex_data_reference);
 
 GeometryObject::GeometryObject(GeometryData &geometry_data) {
     VertexData vertex_data[geometry_data.vertices_length];
-    vao_id = CreateVertexArrayObject();
-    vbo_id = CreateVertexBufferObject();
+    vao_id = RenderingSystem::CreateVertexArrayObject();
+    vbo_id = RenderingSystem::CreateVertexBufferObject();
     vertices_length = geometry_data.vertices_length;
 
     ConvertToVertexData(geometry_data, vertex_data);
