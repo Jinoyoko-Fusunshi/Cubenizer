@@ -6,7 +6,9 @@
 
 struct GeometryData {
     uint32_t vertices_length;
+    uint32_t indices_length;
     Vector3F *vertices;
     Vector3F *normals;
     Vector2F *textures;
+    GLuint *indices;
 };

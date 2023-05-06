@@ -29,6 +29,7 @@ public:
 
     static GLuint CreateVertexArrayObject();
     static GLuint CreateVertexBufferObject();
+    static GLuint CreateElementBuffer();
 };
 
 void SetVector3fUniformData(GLuint program_id, const std::string& uniform_name, Vector3F &data_reference);

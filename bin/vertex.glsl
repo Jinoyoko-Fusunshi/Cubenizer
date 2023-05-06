@@ -20,6 +20,8 @@ uniform vec3 model_position;
 uniform vec3 model_color;
 uniform int neighbour_indices[6];
 
+const int VerticesPerFace = 4;
+
 void main() {
     vertices_out = vertices;
     normals_out = normals;
@@ -29,7 +31,7 @@ void main() {
     model_position_out = model_position;
     model_color_out = model_color;
 
-    face_index_out = gl_VertexID / 6;
+    face_index_out = gl_VertexID / VerticesPerFace;
     neighbour_indices_out = neighbour_indices;
 
     gl_Position = projection * vec4(vertices + model_position - camera_position, 1.0);

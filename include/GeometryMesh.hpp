@@ -5,9 +5,11 @@
 
 class GeometryMesh {
 private:
-    GLuint vao_id = 0;
-    GLuint vbo_id = 0;
     uint32_t vertices_length = 0;
+    uint32_t indices_length = 0;
+    GLuint vao_id = 0u;
+    GLuint vbo_id = 0u;
+    GLuint ebo_id = 0u;
 
 public:
     GeometryMesh() = default;
@@ -16,7 +18,9 @@ public:
 
     void Destroy();
 
-    uint32_t GetVerticesSize() { return vertices_length; }
     GLuint GetVAO() { return vao_id; }
     GLuint GetVBO() { return vbo_id; }
+    GLuint GetEBO() { return ebo_id; }
+    uint32_t GetVerticesSize() { return vertices_length; }
+    uint32_t GetIndicesSize()  { return indices_length; }
 };

@@ -38,6 +38,7 @@ void Model::DrawModel() {
     glUseProgram(shader.GetProgramID());
     glBindVertexArray(geometry.GetVAO());
     glBindBuffer(GL_ARRAY_BUFFER, geometry.GetVBO());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, geometry.GetEBO());
     glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void*)nullptr);
@@ -47,12 +48,14 @@ void Model::DrawModel() {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void*)(2 * sizeof(Vector3F)));
     glEnableVertexAttribArray(2);
 
-    glDrawArrays(GL_TRIANGLES, 0, (GLint)geometry.GetVerticesSize());
+    glDrawElements(GL_TRIANGLES, (GLint)geometry.GetIndicesSize(), GL_UNSIGNED_INT, nullptr);
 
     glDisableVertexAttribArray(2);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
 
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
