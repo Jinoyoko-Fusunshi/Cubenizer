@@ -2,7 +2,7 @@
 
 #include <stdint-gcc.h>
 #include <cmath>
-#include "Vector.hpp"
+#include "Vector3.hpp"
 
 constexpr uint8_t MatrixDimension = 4;
 

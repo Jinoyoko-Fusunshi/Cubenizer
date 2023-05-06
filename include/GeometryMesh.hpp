@@ -3,20 +3,18 @@
 #include <GL/glew.h>
 #include "Geometry.hpp"
 
-enum GeometryObjectIndices {
-    Cube = 0
-};
-
-class GeometryObject {
+class GeometryMesh {
 private:
     GLuint vao_id = 0;
     GLuint vbo_id = 0;
     uint32_t vertices_length = 0;
 
 public:
-    GeometryObject() = default;
-    explicit GeometryObject(GeometryData &geometry_data);
-    ~GeometryObject() = default;
+    GeometryMesh() = default;
+    explicit GeometryMesh(GeometryData &geometry_data);
+    ~GeometryMesh() = default;
+
+    void Destroy();
 
     uint32_t GetVerticesSize() { return vertices_length; }
     GLuint GetVAO() { return vao_id; }

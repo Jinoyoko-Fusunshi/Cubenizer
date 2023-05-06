@@ -16,7 +16,7 @@ int main() {
     RenderingSystem render_system;
     render_system.CreateShaders();
 
-    World world(20, 20);
+    World world(100, 100);
     world.InitModels(render_system);
 
     glEnable(GL_DEPTH_TEST);
@@ -27,6 +27,9 @@ int main() {
         DrawScreen(&window, world);
     }
 
+    glDisable(GL_DEPTH_TEST);
+
+    glfwMakeContextCurrent(nullptr);
     glfwDestroyWindow(window.getHandle());
     glfwTerminate();
 

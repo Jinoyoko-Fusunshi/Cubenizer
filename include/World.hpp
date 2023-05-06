@@ -16,7 +16,6 @@ public:
     ~World();
 
     void InitModels(RenderingSystem &render_system);
-    void UpdateWorld();
     void DrawWorld();
 
     Camera& GetCamera() { return camera; }

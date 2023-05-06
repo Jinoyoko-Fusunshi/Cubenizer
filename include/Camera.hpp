@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector.hpp"
+#include "Vector3.hpp"
 
 class Camera{
 private:
@@ -8,7 +8,6 @@ private:
 
 public:
     Camera() : position(Vector3F()) {}
-    explicit Camera(Vector3F position) : position(position) {}
 
     void TranslateCamera(Vector3F translation_vector);
 
