@@ -3,7 +3,9 @@
 #include "Vector3.hpp"
 #include "ShaderProgram.hpp"
 #include "Matrix.hpp"
-#include "GeometryObject.hpp"
+#include "GeometryMesh.hpp"
+#include "Texture.hpp"
+#include "TextureTypes.hpp"
 
 class Model {
 private:
@@ -14,6 +16,8 @@ private:
     Vector3F color {};
 
 public:
+    explicit Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
+    ~Model() = default;
     explicit Model(GeometryObject &geometry_object_reference, ShaderProgram shader_program, Vector3F position);
 
     void UpdateProjectionMatrix(Matrix4F &projection_matrix);

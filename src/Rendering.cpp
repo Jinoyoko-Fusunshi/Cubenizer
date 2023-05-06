@@ -2,13 +2,34 @@
 #include <GL/glew.h>
 #include "Rendering.hpp"
 #include "Model.hpp"
+#include "Vector2.hpp"
+#include "TextureTypes.hpp"
+#include "MeshTypes.hpp"
 
 using std::vector;
 
 GeometryObject CreateCube();
 
 RenderingSystem::RenderingSystem() {
-    GeometryObject obj = CreateCube();
+    GeometryMesh obj = CreateCube();
+    geometry_objects.insert({MeshTypes::Cube, obj});
+
+    Texture troll_texture("water.png");
+    geometry_textures.insert({TextureTypes::Troll, troll_texture});
+}
+
+RenderingSystem::~RenderingSystem() {
+    for (auto mesh_pair : geometry_objects) {
+        GeometryMesh mesh = mesh_pair.second;
+        mesh.Destroy();
+    }
+    geometry_objects.clear();
+
+    for (auto texture_pair : geometry_textures) {
+        Texture texture = texture_pair.second;
+        texture.Destroy();
+    }
+    geometry_textures.clear();
 
     geometry_objects.insert({0, obj});
 }
@@ -112,8 +133,58 @@ GeometryObject CreateCube() {
         {0.0, -1.0, 0.0},
     };
 
-    GeometryData geometry = {36, vertices, normals};
-    GeometryObject object(geometry);
+    auto *textures = new Vector2F[36] {
+        {0.0, 0.0},
+        {0.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 0.0},
+        {0.0, 0.0},
+
+        {0.0, 0.0},
+        {0.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 0.0},
+        {0.0, 0.0},
+
+        {0.0, 0.0},
+        {0.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 0.0},
+        {0.0, 0.0},
+
+        {0.0, 0.0},
+        {0.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 0.0},
+        {0.0, 0.0},
+
+        {0.0, 0.0},
+        {0.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 0.0},
+        {0.0, 0.0},
+
+        {0.0, 0.0},
+        {0.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 1.0},
+        {1.0, 0.0},
+        {0.0, 0.0},
+    };
+
+    GeometryData geometry = {
+        36,
+        vertices,
+        normals,
+        textures
+    };
+
+    GeometryMesh object(geometry);
     return object;
 }
 

@@ -23,14 +23,10 @@ void World::InitModels(RenderingSystem &render_system) {
             auto y_pos = 0.0f;
 
             Vector3F position(x_pos, y_pos, z_pos);
-            Model model(object, program, position);
+            Model model(position, object, program, texture);
             models.emplace_back(model);
         }
     }
-}
-
-void World::UpdateWorld() {
-
 }
 
 void World::DrawWorld() {
