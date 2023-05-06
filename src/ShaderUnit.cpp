@@ -20,7 +20,7 @@ GLuint CreateShaderUnit(const char *shader_path, GLenum shader_type) {
 
     const char *shader_source = file_content.data();
     GLuint shader_unit = glCreateShader(shader_type);
-    glShaderSource(shader_unit, 1, &shader_source, 0);
+    glShaderSource(shader_unit, 1, &shader_source, nullptr);
     glCompileShader(shader_unit);
 
     GLint shader_status;
@@ -28,7 +28,7 @@ GLuint CreateShaderUnit(const char *shader_path, GLenum shader_type) {
 
     if (shader_status != GL_TRUE) {
         char error_message[string_buffer_size];
-        glGetShaderInfoLog(shader_unit, string_buffer_size, 0, error_message);
+        glGetShaderInfoLog(shader_unit, string_buffer_size, nullptr, error_message);
         printf("Shader compilation error on %s: %s", shader_path, error_message);
         return 0;
     }
@@ -52,7 +52,7 @@ GLuint CreateShaderProgram(vector<ShaderInformation> &shader_infos_reference) {
 
     if (program_status != GL_TRUE) {
         char error_message[string_buffer_size];
-        glGetProgramInfoLog(program_id, string_buffer_size, 0, error_message);
+        glGetProgramInfoLog(program_id, string_buffer_size, nullptr, error_message);
 
         printf("Shader program linker error: %s", error_message);
     }
