@@ -7,10 +7,11 @@
 
 class Model {
 private:
-    Vector3F position;
-    GeometryObject geometry;
-    ShaderProgram shader;
-    Vector3F color;
+    Vector3F position {};
+    Texture texture {};
+    GeometryMesh geometry {};
+    ShaderProgram shader {};
+    Vector3F color {};
 
 public:
     explicit Model(GeometryObject &geometry_object_reference, ShaderProgram shader_program, Vector3F position);

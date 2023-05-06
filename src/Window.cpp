@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 #include <GL/glew.h>
 #include "Window.hpp"
 
@@ -7,9 +7,6 @@ using std::string;
 void PrintGLFWError();
 
 RenderWindow::RenderWindow(const string& window_title, uint32_t width, uint32_t height) {
-    this->width = width;
-    this->height = height;
-
     if (!glfwInit())
         PrintGLFWError();
 
