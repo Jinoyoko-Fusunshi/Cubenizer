@@ -17,11 +17,12 @@ void Model::UpdateProjectionMatrix(Matrix4F &projection_matrix) {
 }
 
 void Model::UpdateModelPosition() {
-    SetVector3fUniformData(shader.GetProgramID(), "model_position", position);
+    auto model_matrix = GetModelMatrix();
+    SetMatrix4fUniformData(shader.GetProgramID(), "model_position", model_matrix);
 }
 
-void Model::UpdateCameraPosition(Vector3F &cam_position) {
-    SetVector3fUniformData(shader.GetProgramID(), "camera_position", cam_position);
+void Model::UpdateCameraPosition(Matrix4F &cam_position) {
+    SetMatrix4fUniformData(shader.GetProgramID(), "camera_position", cam_position);
 }
 
 void Model::UpdateColor(Vector3F &color) {
@@ -58,4 +59,13 @@ void Model::DrawModel() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+}
+
+Matrix4F Model::GetModelMatrix() {
+    Matrix4F model_matrix = Matrix4F(
+        Vector3F(1.0, 0.0, 0.0), Vector3F(0.0, 1.0, 0.0),
+        Vector3F(0.0, 0.0, 1.0), position.AsNegated()
+    );
+
+    return model_matrix;
 }

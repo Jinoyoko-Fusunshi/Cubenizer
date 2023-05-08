@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <map>
-#include "Vector3.hpp"
-#include "Matrix4.hpp"
+#include <Vector3.hpp>
+#include <Matrix4.hpp>
 #include "Geometry.hpp"
 #include "ShaderProgram.hpp"
 #include "ShaderUnit.hpp"
