@@ -31,6 +31,3 @@ public:
     static GLuint CreateVertexBufferObject();
     static GLuint CreateElementBuffer();
 };
-
-void SetVector3fUniformData(GLuint program_id, const std::string& uniform_name, Vector3F &data_reference);
-void SetMatrix4fUniformData(GLuint program_id, const std::string& uniform_name, Matrix4F &data_reference);
