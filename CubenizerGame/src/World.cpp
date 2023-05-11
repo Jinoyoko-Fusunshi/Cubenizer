@@ -6,7 +6,7 @@ World::World(uint32_t width, uint32_t depth, uint32_t height) {
     tiles_height = height;
     tiles_depth = depth;
 
-    Camera::CreateProjection(90.0f, 1.0f, 100.0f);
+    Camera::CreateProjection(1.0, 100.0, 90.0);
 }
 
 void World::InitModels(RenderingSystem &render_system) {

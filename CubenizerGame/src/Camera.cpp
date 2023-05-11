@@ -7,14 +7,18 @@ void Camera::TranslateCamera(Vector3F translation_vector) {
 }
 
 Matrix4F Camera::GetViewMatrix() {
-    Matrix4F view_matrix = Matrix4F(
-        Vector3F(1.0, 0.0, 0.0), Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 0.0, -1.0), position
-    );
-
-    return view_matrix;
+    auto inverted_vector = position * -1.0;
+    return Matrix4F::CreateTranslationMatrix(inverted_vector);
 }
 
-void Camera::CreateProjection(float fov, float near_distance, float far_distance) {
-    projection = Matrix4F::CreateProjectionMatrix(fov, near_distance, far_distance);
+void Camera::CreateProjection(float near_distance, float far_distance, float fov) {
+    auto scale = 1.0f / (tanf((fov / 2.0f) * ((float)M_PI / 180.0f)));
+    float elements[MatrixDimension * MatrixDimension] = {
+        scale, 0.0, 0.0, 0.0,
+        0.0, scale, 0.0, 0.0,
+        0.0, 0.0, -(far_distance / (far_distance - near_distance)), -1.0,
+        0.0, 0.0, -((far_distance * near_distance) / (far_distance - near_distance)), 1.0,
+    };
+
+    projection = Matrix4F(elements);
 }

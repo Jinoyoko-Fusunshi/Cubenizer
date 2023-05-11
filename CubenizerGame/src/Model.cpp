@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include "Model.hpp"
-#include "Rendering.hpp"
 #include "VertexData.hpp"
 
 Model::Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference)
@@ -61,10 +60,14 @@ void Model::DrawModel() {
 }
 
 Matrix4F Model::GetModelMatrix() {
-    Matrix4F model_matrix = Matrix4F(
-        Vector3F(1.0, 0.0, 0.0), Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 0.0, 1.0), position.AsNegated()
-    );
+    float elements[16] = {
+        1.0, 0.0, 0.0, position.GetX(),
+        0.0, 1.0, 0.0, position.GetY(),
+        0.0, 0.0, 1.0, position.GetZ(),
+        0.0, 0.0, 0.0, 1.0,
+    };
+
+    Matrix4F model_matrix(elements);
 
     return model_matrix;
 }
