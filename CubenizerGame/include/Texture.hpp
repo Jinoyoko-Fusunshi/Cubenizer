@@ -14,5 +14,5 @@ public:
 
     void Destroy();
 
-    GLuint GetTextureID() { return texture_id; }
+    [[nodiscard]] GLuint GetTextureID() const { return texture_id; }
 };

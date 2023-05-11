@@ -1,7 +1,6 @@
 #include <vector>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "Camera.hpp"
 #include "Window.hpp"
 #include "World.hpp"
 #include "Rendering.hpp"
@@ -16,7 +15,7 @@ int main() {
     RenderingSystem render_system;
     render_system.CreateShaders();
 
-    World world(100, 100);
+    World world(100, 100, 1);
     world.InitModels(render_system);
 
     glEnable(GL_DEPTH_TEST);
@@ -30,8 +29,8 @@ int main() {
     glDisable(GL_DEPTH_TEST);
 
     glfwMakeContextCurrent(nullptr);
-    glfwDestroyWindow(window.getHandle());
     glfwTerminate();
+    glfwDestroyWindow(window.getHandle());
 
     return EXIT_SUCCESS;
 }

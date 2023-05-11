@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include "Model.hpp"
-#include "Rendering.hpp"
 #include "VertexData.hpp"
 
 Model::Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference)
@@ -12,23 +11,23 @@ Model::Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderP
     this->color = Vector3F((float)r / 255.0f, (float)g / 255.0f, (float)b / 255.0f);
 }
 
-void Model::UpdateProjectionMatrix(Matrix4F &projection_matrix) {
-    SetMatrix4fUniformData(shader.GetProgramID(), "projection", projection_matrix);
+void Model::UpdateModelMatrix() {
+    shader.SetMatrix4fUniformData("model_matrix", GetModelMatrix());
 }
 
-void Model::UpdateModelPosition() {
-    SetVector3fUniformData(shader.GetProgramID(), "model_position", position);
+void Model::UpdateViewMatrix(const Matrix4F &view_matrix_reference) {
+    shader.SetMatrix4fUniformData("view_matrix", view_matrix_reference);
 }
 
-void Model::UpdateCameraPosition(Vector3F &cam_position) {
-    SetVector3fUniformData(shader.GetProgramID(), "camera_position", cam_position);
+void Model::UpdateProjectionMatrix(const Matrix4F &projection_matrix_reference) {
+    shader.SetMatrix4fUniformData("projection", projection_matrix_reference);
 }
 
-void Model::UpdateColor(Vector3F &color) {
-    SetVector3fUniformData(shader.GetProgramID(), "model_color", color);
+void Model::UpdateColor() {
+    shader.SetVector3fUniformData("model_color", color);
 }
 
-void Model::UpdateFaces(int* face_ids, int face_length) {
+void Model::UpdateFaces(const int* face_ids, const int face_length) {
     GLint id = glGetUniformLocation(shader.GetProgramID(), "neighbour_indices");
     glUseProgram(shader.GetProgramID());
     glUniform1iv(id, face_length, face_ids);
@@ -58,4 +57,17 @@ void Model::DrawModel() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+}
+
+Matrix4F Model::GetModelMatrix() {
+    float elements[16] = {
+        1.0, 0.0, 0.0, position.GetX(),
+        0.0, 1.0, 0.0, position.GetY(),
+        0.0, 0.0, 1.0, position.GetZ(),
+        0.0, 0.0, 0.0, 1.0,
+    };
+
+    Matrix4F model_matrix(elements);
+
+    return model_matrix;
 }

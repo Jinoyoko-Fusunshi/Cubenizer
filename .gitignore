@@ -1,2 +1,10 @@
+# cmake build directories
 /cubenizer-debug-gcc
 /cubenizer-release-gcc
+
+# linux binaries
+bin
+.o, .so, .a
+
+# IDE configurations
+.idea
