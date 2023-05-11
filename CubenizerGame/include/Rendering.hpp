@@ -23,9 +23,9 @@ public:
     ~RenderingSystem();
     void CreateShaders();
 
-    std::vector<ShaderProgram>& GetShadersReference() { return shaders_programs; }
-    GeometryMesh& GetMeshByType(MeshTypes meshType) { return geometry_objects[meshType]; }
-    Texture& GetTextureByType(TextureTypes textureType) { return geometry_textures[textureType]; }
+    ShaderProgram& GetShadersReference(const uint32_t index) { return shaders_programs[index]; }
+    [[nodiscard]] GeometryMesh& GetMeshByType(const MeshTypes meshType) { return geometry_objects[meshType]; }
+    [[nodiscard]] Texture& GetTextureByType(const TextureTypes textureType) { return geometry_textures[textureType]; }
 
     static GLuint CreateVertexArrayObject();
     static GLuint CreateVertexBufferObject();

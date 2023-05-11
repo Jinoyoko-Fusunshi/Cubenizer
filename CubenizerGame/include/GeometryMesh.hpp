@@ -5,7 +5,6 @@
 
 class GeometryMesh {
 private:
-    uint32_t vertices_length = 0;
     uint32_t indices_length = 0;
     GLuint vao_id = 0u;
     GLuint vbo_id = 0u;
@@ -18,9 +17,8 @@ public:
 
     void Destroy();
 
-    GLuint GetVAO() { return vao_id; }
-    GLuint GetVBO() { return vbo_id; }
-    GLuint GetEBO() { return ebo_id; }
-    uint32_t GetVerticesSize() { return vertices_length; }
-    uint32_t GetIndicesSize()  { return indices_length; }
+    [[nodiscard]] GLuint GetVAO() const { return vao_id; }
+    [[nodiscard]] GLuint GetVBO() const { return vbo_id; }
+    [[nodiscard]] GLuint GetEBO() const { return ebo_id; }
+    [[nodiscard]] uint32_t GetIndicesSize() const  { return indices_length; }
 };

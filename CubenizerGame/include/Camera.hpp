@@ -19,6 +19,6 @@ public:
     Vector3F &GetPosition() { return position; };
     Matrix4F GetViewMatrix();
 
-    static void CreateProjection(float fov, float near_distance, float far_distance);
-    static Matrix4F& GetProjection() { return projection; }
+    static void CreateProjection(float near_distance, float far_distance, float fov);
+    static Matrix4F& GetProjectionMatrix() { return projection; }
 };

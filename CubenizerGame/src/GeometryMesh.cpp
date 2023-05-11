@@ -5,14 +5,12 @@
 void ConvertToVertexData(GeometryData &geometry_reference, VertexData *vertex_data_reference);
 
 GeometryMesh::GeometryMesh(GeometryData &geometry_data) {
-    VertexData vertex_data[geometry_data.indices_length];
     vao_id = RenderingSystem::CreateVertexArrayObject();
     vbo_id = RenderingSystem::CreateVertexBufferObject();
     ebo_id = RenderingSystem::CreateElementBuffer();
-
-    vertices_length = geometry_data.vertices_length;
     indices_length = geometry_data.indices_length;
 
+    VertexData vertex_data[geometry_data.indices_length];
     ConvertToVertexData(geometry_data, vertex_data);
     glBindVertexArray(vao_id);
 

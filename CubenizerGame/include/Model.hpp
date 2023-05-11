@@ -19,11 +19,11 @@ public:
     explicit Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
     ~Model() = default;
 
-    void UpdateProjectionMatrix(Matrix4F &projection_matrix);
-    void UpdateModelPosition();
-    void UpdateCameraPosition(Matrix4F &cam_position);
-    void UpdateColor(Vector3F &color);
-    void UpdateFaces(int* face_ids, int face_length);
+    void UpdateModelMatrix();
+    void UpdateViewMatrix(const Matrix4F &view_matrix_reference);
+    void UpdateProjectionMatrix(const Matrix4F &projection_matrix_reference);
+    void UpdateColor();
+    void UpdateFaces(const int* face_ids, int face_length);
     void DrawModel();
 
     Vector3F& GetColor() { return color; }
