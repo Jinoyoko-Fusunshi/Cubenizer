@@ -15,12 +15,8 @@ int main() {
     RenderingSystem render_system;
     render_system.CreateShaders();
 
-    World world(100, 100, 100);
+    World world(100, 100, 1);
     world.InitModels(render_system);
-
-
-
-    Matrix4F view = world.GetCamera().GetViewMatrix();
 
     glEnable(GL_DEPTH_TEST);
 
