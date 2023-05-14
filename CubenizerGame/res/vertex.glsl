@@ -34,5 +34,5 @@ void main() {
     face_index_out = gl_VertexID / VerticesPerFace;
     neighbour_indices_out = neighbour_indices;
 
-    gl_Position = vec4(vertices, 1) * model_matrix * view_matrix * projection;
+    gl_Position = vec4(vertices, 1) * model_matrix * view_matrix * projection ;
 }
