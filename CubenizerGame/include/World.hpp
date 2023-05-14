@@ -8,7 +8,7 @@ private:
     uint32_t tiles_width = 0;
     uint32_t tiles_height = 0;
     uint32_t tiles_depth = 0;
-    Camera camera = Camera(Vector3F(0.0, 0.0, 2.0));
+    Camera camera = Camera(Vector3F(0.0, 0.0, 2.0), 0.2);
     std::vector<Model> models {};
 
     void DrawModels();

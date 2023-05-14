@@ -67,7 +67,5 @@ Matrix4F Model::GetModelMatrix() {
         0.0, 0.0, 0.0, 1.0,
     };
 
-    Matrix4F model_matrix(elements);
-
-    return model_matrix;
+    return  Matrix4F(elements);
 }

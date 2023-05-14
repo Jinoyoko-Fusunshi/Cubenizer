@@ -2,23 +2,32 @@
 
 #include <Vector3.hpp>
 #include <Matrix4.hpp>
+#include "Orientation.hpp"
 
-class Camera{
+class Camera {
 private:
-    Vector3F position;
+    float camera_speed = 0.2;
+    float yaw_angle = 0.0;
+    float pitch_angle = 0.0;
+    float roll_angle = 0.0;
 
-    static Matrix4F projection;
+    Vector3F position {};
+    Matrix4F view_matrix = Matrix4F::IdentityMatrix();
+    Matrix4F projection = Matrix4F::IdentityMatrix();
+    Orientation orientation {};
 
 public:
-    Camera() : position(Vector3F()) {}
-    explicit Camera(Vector3F position) : position(position) {}
+    Camera() = default;
+    explicit Camera(Vector3F position, float camera_speed = 0.2);
     ~Camera() = default;
 
-    void TranslateCamera(Vector3F translation_vector);
+    void UpdateView();
+    void TranslateCamera(Vector3F translation);
+    void YawBy(float angle_in_degrees);
+    void PitchBy(float angle_in_degrees);
+    void RollBy(float angle_in_degrees);
 
-    Vector3F &GetPosition() { return position; };
-    Matrix4F GetViewMatrix();
-
-    static void CreateProjection(float near_distance, float far_distance, float fov);
-    static Matrix4F& GetProjectionMatrix() { return projection; }
+    Vector3F &GetPosition() { return position; }
+    Matrix4F &GetViewMatrix() { return view_matrix; }
+    Matrix4F& GetProjectionMatrix() { return projection; }
 };
