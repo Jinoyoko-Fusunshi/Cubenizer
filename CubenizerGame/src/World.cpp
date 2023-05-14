@@ -5,8 +5,6 @@ World::World(uint32_t width, uint32_t depth, uint32_t height) {
     tiles_width = width;
     tiles_height = height;
     tiles_depth = depth;
-
-    Camera::CreateProjection(1.0, 100.0, 90.0);
 }
 
 void World::InitModels(RenderingSystem &render_system) {
@@ -101,7 +99,7 @@ void World::DrawModels() {
 
                 current_model.UpdateModelMatrix();
                 current_model.UpdateViewMatrix(camera.GetViewMatrix());
-                current_model.UpdateProjectionMatrix(Camera::GetProjectionMatrix());
+                current_model.UpdateProjectionMatrix(camera.GetProjectionMatrix());
                 current_model.UpdateColor();
                 current_model.UpdateFaces(tile_face_ids, 6);
                 current_model.DrawModel();
