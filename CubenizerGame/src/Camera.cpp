@@ -1,16 +1,28 @@
 #include "Camera.hpp"
 
-Camera::Camera(Vector3F position, float camera_speed) : position(position), camera_speed(camera_speed) {
-    projection = Matrix4F::ProjectionMatrix(1.0, 100.0, 90.0);
+Camera::Camera(Vector3F position, Viewport camera_viewport, float camera_speed)
+    : position(position), camera_viewport(camera_viewport), camera_speed(camera_speed) {
+    projection_matrix = Matrix4F::ProjectionMatrix(camera_viewport.near_distance, camera_viewport.far_distance, camera_viewport.fov);
+
+    uint16_t half_width = camera_viewport.screen_width / 2;
+    uint16_t half_height = camera_viewport.screen_height / 2;
+
+    float elements[MatrixDimension * MatrixDimension] = {
+        1.0f / (float)half_width, 0.0, 0.0, -1.0,
+        0.0, 1.0f / (float)half_height, 0.0, -1.0,
+        0.0, 0.0, 1.0, 0.0,
+        0.0, 0.0, 0.0, 1.0
+    };
+    screen_translation_matrix = Matrix4F(elements);
 }
 
 void Camera::UpdateView() {
     auto inverted_position = position * -1.0;
-    orientation.SetYawRotation(FDegree(yaw_angle));
-    orientation.SetPitchRotation(FDegree(pitch_angle));
-    orientation.SetRollRotation(FDegree(roll_angle));
-    orientation.SetTranslation(inverted_position);
-    view_matrix = orientation.GetTransformation();
+    orientation_matrix.SetYawRotation(FDegree(yaw_angle));
+    orientation_matrix.SetPitchRotation(FDegree(pitch_angle));
+    orientation_matrix.SetRollRotation(FDegree(roll_angle));
+    orientation_matrix.SetTranslation(inverted_position);
+    view_matrix = orientation_matrix.GetTransformation();
 }
 
 void Camera::TranslateCamera(Vector3F translation) {

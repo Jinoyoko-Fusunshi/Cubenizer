@@ -42,7 +42,7 @@ void ConvertToVertexData(GeometryData &geometry_reference, VertexData *vertex_da
     uint32_t normal_count = geometry_reference.indices_length;
 
     for (uint32_t i = 0u; i < normal_count; i++) {
-        VertexData data_set = {geometry_reference.vertices[i], geometry_reference.normals[i], geometry_reference.textures[i]};
+        VertexData data_set = { geometry_reference.vertices[i], geometry_reference.normals[i], geometry_reference.textures[i]};
         vertex_data_reference[i] = data_set;
     }
 }
