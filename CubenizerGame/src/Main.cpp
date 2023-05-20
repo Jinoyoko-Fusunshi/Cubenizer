@@ -39,6 +39,8 @@ int main() {
     world.InitModels(render_system);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
 
     while (!glfwWindowShouldClose(window.getHandle())) {
         glfwPollEvents();
