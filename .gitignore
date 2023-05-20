@@ -1,6 +1,7 @@
 # cmake build directories
 /cubenizer-debug-gcc
 /cubenizer-release-gcc
+/build
 
 # linux binaries
 bin
