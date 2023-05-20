@@ -106,7 +106,7 @@ GeometryMesh CreateCube() {
         Vector3F(0.0, -1.0, 0.0),
     };
 
-    auto *textures = new Vector2F[24] {
+    auto textures = new Vector2F[24] {
         Vector2F(0.0, 1.0),
         Vector2F(0.0, 0.0),
         Vector2F(1.0, 0.0),
@@ -138,7 +138,7 @@ GeometryMesh CreateCube() {
         Vector2F(1.0, 1.0),
     };
 
-    auto *indices = new GLuint[36] {
+    auto indices = new GLuint[36] {
         0, 1, 2, 2, 3, 0,
         4, 5, 6, 6, 7, 4,
         8, 9, 10, 10, 11,8,

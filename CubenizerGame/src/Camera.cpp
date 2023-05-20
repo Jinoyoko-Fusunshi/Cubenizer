@@ -3,7 +3,7 @@
 Matrix4F Camera::screen_transformation_matrix = Matrix4F::IdentityMatrix();
 
 Camera::Camera(Vector3F position, Viewport camera_viewport, float camera_speed)
-    : position(position), camera_viewport(camera_viewport), camera_speed(camera_speed) {
+    : position(position), camera_speed(camera_speed) {
     projection_matrix = Matrix4F::ProjectionMatrix(camera_viewport.near_distance, camera_viewport.far_distance, camera_viewport.fov);
 
     uint16_t half_width = camera_viewport.screen_width / 2;
@@ -37,7 +37,7 @@ void Camera::TranslateCamera(Vector3F translation) {
 
 void Camera::YawBy(float angle_in_degrees) {
     yaw_angle += angle_in_degrees;
-
+    
     if (yaw_angle >= 360.0)
         yaw_angle -= 360.0;
 
