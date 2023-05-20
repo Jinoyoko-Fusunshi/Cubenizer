@@ -10,14 +10,6 @@ using std::vector, std::string;
 
 GeometryMesh CreateCube();
 
-RenderingSystem::RenderingSystem() {
-    GeometryMesh obj = CreateCube();
-    geometry_objects.insert({MeshTypes::Cube, obj});
-
-    Texture troll_texture("water.png");
-    geometry_textures.insert({TextureTypes::Troll, troll_texture});
-}
-
 RenderingSystem::~RenderingSystem() {
     for (auto mesh_pair : geometry_objects) {
         GeometryMesh mesh = mesh_pair.second;
@@ -184,4 +176,14 @@ GLuint RenderingSystem::CreateElementBuffer() {
     GLuint ebo = 0u;
     glGenBuffers(1, &ebo);
     return ebo;
+}
+
+void RenderingSystem::CreateGeometries() {
+    GeometryMesh obj = CreateCube();
+    geometry_objects.insert({MeshTypes::Cube, obj});
+}
+
+void RenderingSystem::CreateTextures() {
+    Texture troll_texture("water.png");
+    geometry_textures.insert({TextureTypes::Troll, troll_texture});
 }

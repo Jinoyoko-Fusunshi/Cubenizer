@@ -23,6 +23,7 @@ int main() {
 
     RenderingSystem render_system;
     render_system.CreateShaders();
+    render_system.CreateTextures();
 
     Viewport viewport = {
         .fov = 90.0,
@@ -34,6 +35,7 @@ int main() {
 
     World world(100, 100, 1);
     world.CreateCamera(Vector3F(0.0, 0.0, 2.0), viewport);
+    render_system.CreateGeometries();
     world.InitModels(render_system);
 
     glEnable(GL_DEPTH_TEST);

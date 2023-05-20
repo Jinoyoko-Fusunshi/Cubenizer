@@ -19,8 +19,10 @@ private:
     std::map<uint32_t, Texture> geometry_textures;
 
 public:
-    RenderingSystem();
+    RenderingSystem() = default;
     ~RenderingSystem();
+    void CreateGeometries();
+    void CreateTextures();
     void CreateShaders();
 
     ShaderProgram& GetShadersReference(const uint32_t index) { return shaders_programs[index]; }
