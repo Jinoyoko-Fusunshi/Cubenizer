@@ -1,3 +1,4 @@
 [submodule "GameMath"]
 	path = GameMath
 	url = https://github.com/Jinoyoko-Fusunshi/GameMath
+    branch = develop

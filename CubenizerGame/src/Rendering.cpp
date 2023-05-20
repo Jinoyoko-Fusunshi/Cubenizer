@@ -10,14 +10,6 @@ using std::vector, std::string;
 
 GeometryMesh CreateCube();
 
-RenderingSystem::RenderingSystem() {
-    GeometryMesh obj = CreateCube();
-    geometry_objects.insert({MeshTypes::Cube, obj});
-
-    Texture troll_texture("water.png");
-    geometry_textures.insert({TextureTypes::Troll, troll_texture});
-}
-
 RenderingSystem::~RenderingSystem() {
     for (auto mesh_pair : geometry_objects) {
         GeometryMesh mesh = mesh_pair.second;
@@ -50,36 +42,36 @@ void RenderingSystem::CreateShaders() {
 }
 
 GeometryMesh CreateCube() {
-    auto *vertices = new Vector3F[24] {
-        Vector3F(0.0, 0.0, 0.0),
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(1.0, 1.0, 0.0),
-        Vector3F(1.0, 0.0, 0.0),
+    auto vertices = new Vector3F[24] {
+        Vector3F(200.0, 300.0, 0.0),
+        Vector3F(200.0, 400.0, 0.0),
+        Vector3F(300.0, 400.0, 0.0),
+        Vector3F(300.0, 300.0, 0.0),
 
-        Vector3F(1.0, 0.0, 0.0),
-        Vector3F(1.0, 1.0, 0.0),
-        Vector3F(1.0, 1.0, -1.0),
-        Vector3F(1.0, 0.0, -1.0),
+        Vector3F(300.0, 300.0, 0.0),
+        Vector3F(300.0, 400.0, 0.0),
+        Vector3F(300.0, 400.0, -100.0),
+        Vector3F(300.0, 300.0, -100.0),
 
-        Vector3F(0.0, 0.0, -1.0),
-        Vector3F(0.0, 1.0, -1.0),
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 0.0, 0.0),
+        Vector3F(200.0, 300.0, -100.0),
+        Vector3F(200.0, 400.0, -100.0),
+        Vector3F(200.0, 400.0, 0.0),
+        Vector3F(200.0, 300.0, 0.0),
 
-        Vector3F(1.0, 0.0, -1.0),
-        Vector3F(1.0, 1.0, -1.0),
-        Vector3F(0.0, 1.0, -1.0),
-        Vector3F(0.0, 0.0, -1.0),
+        Vector3F(300.0, 300.0, -100.0),
+        Vector3F(300.0, 400.0, -100.0),
+        Vector3F(200.0, 400.0, -100.0),
+        Vector3F(200.0, 300.0, -100.0),
 
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 1.0, -1.0),
-        Vector3F(1.0, 1.0, -1.0),
-        Vector3F(1.0, 1.0, 0.0),
+        Vector3F(200.0, 400.0, 0.0),
+        Vector3F(200.0, 400.0, -100.0),
+        Vector3F(300.0, 400.0, -100.0),
+        Vector3F(300.0, 400.0, 0.0),
 
-        Vector3F(0.0, 0.0, -1.0),
-        Vector3F(0.0, 0.0, 0.0),
-        Vector3F(1.0, 0.0, 0.0),
-        Vector3F(1.0, 0.0, -1.0),
+        Vector3F(200.0, 300.0, -100.0),
+        Vector3F(200.0, 300.0, 0.0),
+        Vector3F(300.0, 300.0, 0.0),
+        Vector3F(300.0, 300.0, -100.0),
     };
 
     auto *normals = new Vector3F[24] {
@@ -114,7 +106,7 @@ GeometryMesh CreateCube() {
         Vector3F(0.0, -1.0, 0.0),
     };
 
-    auto *textures = new Vector2F[24] {
+    auto textures = new Vector2F[24] {
         Vector2F(0.0, 1.0),
         Vector2F(0.0, 0.0),
         Vector2F(1.0, 0.0),
@@ -146,7 +138,7 @@ GeometryMesh CreateCube() {
         Vector2F(1.0, 1.0),
     };
 
-    auto *indices = new GLuint[36] {
+    auto indices = new GLuint[36] {
         0, 1, 2, 2, 3, 0,
         4, 5, 6, 6, 7, 4,
         8, 9, 10, 10, 11,8,
@@ -184,4 +176,14 @@ GLuint RenderingSystem::CreateElementBuffer() {
     GLuint ebo = 0u;
     glGenBuffers(1, &ebo);
     return ebo;
+}
+
+void RenderingSystem::CreateGeometries() {
+    GeometryMesh obj = CreateCube();
+    geometry_objects.insert({MeshTypes::Cube, obj});
+}
+
+void RenderingSystem::CreateTextures() {
+    Texture troll_texture("water.png");
+    geometry_textures.insert({TextureTypes::Troll, troll_texture});
 }

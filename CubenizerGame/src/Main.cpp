@@ -7,9 +7,10 @@
 
 using std::vector;
 
-double mouse_pos_x = 0.0, mouse_pos_y = 0.0;
 const double MouseSensitivity = 0.5;
-const Vector3F BackgroundColor(0.2f, 0.2f, 0.2f);
+const Vector3F BackgroundColor(0.2, 0.2, 0.2);
+
+double mouse_pos_x = 0.0, mouse_pos_y = 0.0;
 
 void HandleInput(GLFWwindow* window, World &world_reference);
 void HandleMouseInput(GLFWwindow* window, World &world_reference);
@@ -17,16 +18,29 @@ void HandleKeyboardInput(GLFWwindow* window, World &world_reference);
 void DrawScreen(RenderWindow *window_reference, World &world_reference);
 
 int main() {
-    RenderWindow window("Test 3D-GL Window", 800, 600);
+    RenderWindow window("Test 3D-GL Window", Vector2F(800.0, 600.0));
     glfwGetCursorPos(window.getHandle(), &mouse_pos_x, &mouse_pos_y);
 
     RenderingSystem render_system;
     render_system.CreateShaders();
+    render_system.CreateTextures();
+
+    Viewport viewport = {
+        .fov = 90.0,
+        .near_distance = 1.0,
+        .far_distance = 100.0,
+        .screen_width = (uint16_t)window.GetSize().GetX(),
+        .screen_height = (uint16_t)window.GetSize().GetY()
+    };
 
     World world(100, 100, 1);
+    world.CreateCamera(Vector3F(0.0, 0.0, 2.0), viewport);
+    render_system.CreateGeometries();
     world.InitModels(render_system);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
 
     while (!glfwWindowShouldClose(window.getHandle())) {
         glfwPollEvents();

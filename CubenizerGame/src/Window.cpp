@@ -6,7 +6,7 @@ using std::string;
 
 void PrintGLFWError();
 
-RenderWindow::RenderWindow(const string& window_title, uint32_t width, uint32_t height) {
+RenderWindow::RenderWindow(const string& window_title, Vector2F size) : window_size(size) {
     if (!glfwInit())
         PrintGLFWError();
 
@@ -15,7 +15,7 @@ RenderWindow::RenderWindow(const string& window_title, uint32_t width, uint32_t 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    handle = glfwCreateWindow((int)width, (int)height, window_title.c_str(), nullptr, nullptr);
+    handle = glfwCreateWindow((int)size.GetX(), (int)size.GetY(), window_title.c_str(), nullptr, nullptr);
 
     if(!handle)
         PrintGLFWError();

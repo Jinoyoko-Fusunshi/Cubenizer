@@ -7,6 +7,10 @@ World::World(uint32_t width, uint32_t depth, uint32_t height) {
     tiles_depth = depth;
 }
 
+void World::CreateCamera(Vector3F position, Viewport camera_viewport, float camera_speed) {
+    camera = Camera(position, camera_viewport, camera_speed);
+}
+
 void World::InitModels(RenderingSystem &render_system) {
     ShaderProgram program = render_system.GetShadersReference(0);
     GeometryMesh object = render_system.GetMeshByType(MeshTypes::Cube);
@@ -15,9 +19,9 @@ void World::InitModels(RenderingSystem &render_system) {
     for (uint32_t y_tile = 0; y_tile < tiles_height; y_tile++) {
         for (uint32_t z_tile = 0; z_tile < tiles_depth; z_tile++) {
             for (uint32_t x_tile = 0; x_tile < tiles_width; x_tile++) {
-                auto x_pos = 0.0f + (float)x_tile;
-                auto y_pos = 0.0f + (float)y_tile;
-                auto z_pos = 0.0f - (float)z_tile;
+                auto x_pos = 0.0f + (float)x_tile * 100.0;
+                auto y_pos = 0.0f + (float)y_tile * 100.0;
+                auto z_pos = 0.0f - (float)z_tile * 100.0;
 
                 Vector3F position(x_pos, y_pos, z_pos);
                 Model model(position, object, program, texture);
@@ -61,9 +65,9 @@ void World::DrawModels() {
     if (z_tile_start < 0)
         z_tile_start = 0;
 
-    for (int32_t y_tile = y_tile_start; y_tile < y_tile_end; y_tile++) {
-        for (int32_t z_tile = z_tile_start; z_tile < z_tile_end; z_tile++) {
-            for (int32_t x_tile = x_tile_start; x_tile < x_tile_end; x_tile++) {
+    for (int32_t y_tile = 0; y_tile < tiles_height; y_tile++) {
+        for (int32_t z_tile = 0; z_tile < tiles_depth; z_tile++) {
+            for (int32_t x_tile = 0; x_tile < tiles_width; x_tile++) {
                 uint32_t tile_layer = y_tile * (tiles_depth * tiles_width);
                 uint32_t tile_position = z_tile * tiles_width + x_tile;
                 uint32_t tile_index = tile_layer + tile_position;
