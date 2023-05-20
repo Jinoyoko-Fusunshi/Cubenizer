@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include "Model.hpp"
 #include "VertexData.hpp"
+#include "Camera.hpp"
 
 Model::Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference)
     : position(position), geometry(geometry_object_reference), shader(shader_reference), texture(texture_reference) {
@@ -60,12 +61,14 @@ void Model::DrawModel() {
 }
 
 Matrix4F Model::GetModelMatrix() {
+    auto screen_space_position = Camera::GetScreenTransformationMatrix() * position;
+
     float elements[16] = {
-        1.0, 0.0, 0.0, position.GetX(),
-        0.0, 1.0, 0.0, position.GetY(),
-        0.0, 0.0, 1.0, position.GetZ(),
+        1.0, 0.0, 0.0, screen_space_position.GetX(),
+        0.0, 1.0, 0.0, screen_space_position.GetY(),
+        0.0, 0.0, 1.0, screen_space_position.GetZ(),
         0.0, 0.0, 0.0, 1.0,
     };
 
-    return  Matrix4F(elements);
+    return Matrix4F(elements);
 }

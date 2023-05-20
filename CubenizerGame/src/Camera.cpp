@@ -1,19 +1,23 @@
 #include "Camera.hpp"
 
+Matrix4F Camera::screen_transformation_matrix = Matrix4F::IdentityMatrix();
+
 Camera::Camera(Vector3F position, Viewport camera_viewport, float camera_speed)
     : position(position), camera_viewport(camera_viewport), camera_speed(camera_speed) {
     projection_matrix = Matrix4F::ProjectionMatrix(camera_viewport.near_distance, camera_viewport.far_distance, camera_viewport.fov);
 
     uint16_t half_width = camera_viewport.screen_width / 2;
     uint16_t half_height = camera_viewport.screen_height / 2;
+    uint16_t half_depth = half_width;
 
     float elements[MatrixDimension * MatrixDimension] = {
         1.0f / (float)half_width, 0.0, 0.0, -1.0,
         0.0, 1.0f / (float)half_height, 0.0, -1.0,
-        0.0, 0.0, 1.0, 0.0,
+        0.0, 0.0, 1.0f / (float)half_depth, 1.0,
         0.0, 0.0, 0.0, 1.0
     };
-    screen_translation_matrix = Matrix4F(elements);
+
+    screen_transformation_matrix = Matrix4F(elements);
 }
 
 void Camera::UpdateView() {

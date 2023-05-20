@@ -50,36 +50,36 @@ void RenderingSystem::CreateShaders() {
 }
 
 GeometryMesh CreateCube() {
-    auto *vertices = new Vector3F[24] {
-        Vector3F(0.0, 0.0, 0.0),
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(1.0, 1.0, 0.0),
-        Vector3F(1.0, 0.0, 0.0),
+    auto vertices = new Vector3F[24] {
+        Vector3F(200.0, 300.0, 0.0),
+        Vector3F(200.0, 400.0, 0.0),
+        Vector3F(300.0, 400.0, 0.0),
+        Vector3F(300.0, 300.0, 0.0),
 
-        Vector3F(1.0, 0.0, 0.0),
-        Vector3F(1.0, 1.0, 0.0),
-        Vector3F(1.0, 1.0, -1.0),
-        Vector3F(1.0, 0.0, -1.0),
+        Vector3F(300.0, 300.0, 0.0),
+        Vector3F(300.0, 400.0, 0.0),
+        Vector3F(300.0, 400.0, -100.0),
+        Vector3F(300.0, 300.0, -100.0),
 
-        Vector3F(0.0, 0.0, -1.0),
-        Vector3F(0.0, 1.0, -1.0),
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 0.0, 0.0),
+        Vector3F(200.0, 300.0, -100.0),
+        Vector3F(200.0, 400.0, -100.0),
+        Vector3F(200.0, 400.0, 0.0),
+        Vector3F(200.0, 300.0, 0.0),
 
-        Vector3F(1.0, 0.0, -1.0),
-        Vector3F(1.0, 1.0, -1.0),
-        Vector3F(0.0, 1.0, -1.0),
-        Vector3F(0.0, 0.0, -1.0),
+        Vector3F(300.0, 300.0, -100.0),
+        Vector3F(300.0, 400.0, -100.0),
+        Vector3F(200.0, 400.0, -100.0),
+        Vector3F(200.0, 300.0, -100.0),
 
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 1.0, -1.0),
-        Vector3F(1.0, 1.0, -1.0),
-        Vector3F(1.0, 1.0, 0.0),
+        Vector3F(200.0, 400.0, 0.0),
+        Vector3F(200.0, 400.0, -100.0),
+        Vector3F(300.0, 400.0, -100.0),
+        Vector3F(300.0, 400.0, 0.0),
 
-        Vector3F(0.0, 0.0, -1.0),
-        Vector3F(0.0, 0.0, 0.0),
-        Vector3F(1.0, 0.0, 0.0),
-        Vector3F(1.0, 0.0, -1.0),
+        Vector3F(200.0, 300.0, -100.0),
+        Vector3F(200.0, 300.0, 0.0),
+        Vector3F(300.0, 300.0, 0.0),
+        Vector3F(300.0, 300.0, -100.0),
     };
 
     auto *normals = new Vector3F[24] {

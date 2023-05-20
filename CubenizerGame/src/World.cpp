@@ -19,9 +19,9 @@ void World::InitModels(RenderingSystem &render_system) {
     for (uint32_t y_tile = 0; y_tile < tiles_height; y_tile++) {
         for (uint32_t z_tile = 0; z_tile < tiles_depth; z_tile++) {
             for (uint32_t x_tile = 0; x_tile < tiles_width; x_tile++) {
-                auto x_pos = 0.0f + (float)x_tile;
-                auto y_pos = 0.0f + (float)y_tile;
-                auto z_pos = 0.0f - (float)z_tile;
+                auto x_pos = 0.0f + (float)x_tile * 100.0;
+                auto y_pos = 0.0f + (float)y_tile * 100.0;
+                auto z_pos = 0.0f - (float)z_tile * 100.0;
 
                 Vector3F position(x_pos, y_pos, z_pos);
                 Model model(position, object, program, texture);

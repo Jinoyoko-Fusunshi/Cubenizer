@@ -15,9 +15,9 @@ private:
     Vector3F position {};
     Matrix4F view_matrix = Matrix4F::IdentityMatrix();
     Matrix4F projection_matrix = Matrix4F::IdentityMatrix();
-    Matrix4F screen_translation_matrix = Matrix4F::IdentityMatrix();
     Orientation orientation_matrix {};
-    Viewport camera_viewport {};
+
+    static Matrix4F screen_transformation_matrix;
 
 public:
     Camera() = default;
@@ -33,4 +33,7 @@ public:
     Vector3F& GetPosition() { return position; }
     Matrix4F& GetViewMatrix() { return view_matrix; }
     Matrix4F& GetProjectionMatrix() { return projection_matrix; }
+    Orientation& GetOrientation() { return orientation_matrix; }
+
+    Matrix4F static GetScreenTransformationMatrix() { return screen_transformation_matrix;}
 };
