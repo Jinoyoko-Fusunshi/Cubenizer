@@ -1,9 +1,9 @@
 #pragma once
 
 #include <GL/glew.h>
-#include "Geometry.hpp"
+#include "MeshData.hpp"
 
-class GeometryMesh {
+class Mesh {
 private:
     uint32_t indices_length = 0;
     GLuint vao_id = 0u;
@@ -11,9 +11,9 @@ private:
     GLuint ebo_id = 0u;
 
 public:
-    GeometryMesh() = default;
-    explicit GeometryMesh(GeometryData &geometry_data);
-    ~GeometryMesh() = default;
+    Mesh() = default;
+    explicit Mesh(MeshData geometry_data);
+    ~Mesh() = default;
 
     void Destroy();
 
