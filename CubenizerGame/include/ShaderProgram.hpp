@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 #include <Vector3.hpp>
 #include <Matrix4.hpp>
-#include "Geometry.hpp"
+#include "MeshData.hpp"
 
 class ShaderProgram {
 private:

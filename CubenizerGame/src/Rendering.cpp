@@ -5,17 +5,18 @@
 #include "Vector2.hpp"
 #include "TextureTypes.hpp"
 #include "MeshTypes.hpp"
+#include "MeshBuilder.hpp"
 
 using std::vector, std::string;
 
-GeometryMesh CreateCube();
+Mesh CreateCube();
 
 RenderingSystem::~RenderingSystem() {
-    for (auto mesh_pair : geometry_objects) {
-        GeometryMesh mesh = mesh_pair.second;
+    for (auto mesh_pair : meshes) {
+        Mesh mesh = mesh_pair.second;
         mesh.Destroy();
     }
-    geometry_objects.clear();
+    meshes.clear();
 
     for (auto texture_pair : geometry_textures) {
         Texture texture = texture_pair.second;
@@ -41,128 +42,53 @@ void RenderingSystem::CreateShaders() {
     shader_infos.clear();
 }
 
-GeometryMesh CreateCube() {
-    Vector3F start_point(0.0, 0.0, 0.0);
-    Vector3F width = Vector3F::XUnitVector3() * Model::ModelWidth;
-    Vector3F height = Vector3F::YUnitVector3() * Model::ModelWidth;
-    Vector3F depth = Vector3F::ZUnitVector3() * Model::ModelWidth;
+Mesh CreateCube() {
+    Vector3D start_point(0.0, 0.0, 0.0);
+    Vector3D width = Vector3D::XUnitVector3() * Model::ModelWidth;
+    Vector3D height = Vector3D::YUnitVector3() * Model::ModelWidth;
+    Vector3D depth = Vector3D::ZUnitVector3() * Model::ModelWidth;
 
-    auto vertices = new Vector3F[24] {
-        start_point,
-        start_point + height,
-        start_point + width + height,
-        start_point + width,
+    MeshBuilder builder {};
+    builder
+        .AddVertex(start_point).AddVertex(start_point + height)
+        .AddVertex(start_point + width + height).AddVertex(start_point + width)
+        .AddVertex(start_point + width).AddVertex(start_point + width + height)
+        .AddVertex(start_point + width + height - depth).AddVertex(start_point + width - depth)
+        .AddVertex(start_point - depth).AddVertex(start_point + height - depth)
+        .AddVertex(start_point + height).AddVertex(start_point)
+        .AddVertex(start_point + width - depth).AddVertex(start_point + width + height - depth)
+        .AddVertex(start_point + height - depth).AddVertex(start_point - depth)
+        .AddVertex(start_point + height).AddVertex(start_point + height - depth)
+        .AddVertex(start_point + width + height - depth).AddVertex(start_point + width + height)
+        .AddVertex(start_point - depth).AddVertex(start_point)
+        .AddVertex(start_point + width).AddVertex(start_point + width - depth)
+        .AddNormal(Vector3D(0.0, 0.0, 1.0)).AddNormal(Vector3D(0.0, 0.0, 1.0)).AddNormal(Vector3D(0.0, 0.0, 1.0)).AddNormal(Vector3D(0.0, 0.0, 1.0))
+        .AddNormal(Vector3D(1.0, 0.0, 0.0)).AddNormal(Vector3D(1.0, 0.0, 0.0)).AddNormal(Vector3D(1.0, 0.0, 0.0)).AddNormal(Vector3D(1.0, 0.0, 0.0))
+        .AddNormal(Vector3D(-1.0, 0.0, 0.0)).AddNormal(Vector3D(-1.0, 0.0, 0.0)).AddNormal(Vector3D(-1.0, 0.0, 0.0)).AddNormal(Vector3D(-1.0, 0.0, 0.0))
+        .AddNormal(Vector3D(0.0, 0.0, -1.0)).AddNormal(Vector3D(0.0, 0.0, -1.0)).AddNormal(Vector3D(0.0, 0.0, -1.0)).AddNormal(Vector3D(0.0, 0.0, -1.0))
+        .AddNormal(Vector3D(0.0, 1.0, 0.0)).AddNormal(Vector3D(0.0, 1.0, 0.0)).AddNormal(Vector3D(0.0, 1.0, 0.0)).AddNormal(Vector3D(0.0, 1.0, 0.0))
+        .AddNormal(Vector3D(0.0, -1.0, 0.0)).AddNormal(Vector3D(0.0, -1.0, 0.0)).AddNormal(Vector3D(0.0, -1.0, 0.0)).AddNormal(Vector3D(0.0, -1.0, 0.0))
+        .AddTextureCoordinate(Vector2D(0.0, 1.0)).AddTextureCoordinate(Vector2D(0.0, 0.0))
+        .AddTextureCoordinate(Vector2D(1.0, 0.0)).AddTextureCoordinate(Vector2D(1.0, 1.0))
+        .AddTextureCoordinate(Vector2D(0.0, 1.0)).AddTextureCoordinate(Vector2D(0.0, 0.0))
+        .AddTextureCoordinate(Vector2D(1.0, 0.0)).AddTextureCoordinate(Vector2D(1.0, 1.0))
+        .AddTextureCoordinate(Vector2D(0.0, 1.0)).AddTextureCoordinate(Vector2D(0.0, 0.0))
+        .AddTextureCoordinate(Vector2D(1.0, 0.0)).AddTextureCoordinate(Vector2D(1.0, 1.0))
+        .AddTextureCoordinate(Vector2D(0.0, 1.0)).AddTextureCoordinate(Vector2D(0.0, 0.0))
+        .AddTextureCoordinate(Vector2D(1.0, 0.0)).AddTextureCoordinate(Vector2D(1.0, 1.0))
+        .AddTextureCoordinate(Vector2D(0.0, 1.0)).AddTextureCoordinate(Vector2D(0.0, 0.0))
+        .AddTextureCoordinate(Vector2D(1.0, 0.0)).AddTextureCoordinate(Vector2D(1.0, 1.0))
+        .AddTextureCoordinate(Vector2D(0.0, 1.0)).AddTextureCoordinate(Vector2D(0.0, 0.0))
+        .AddTextureCoordinate(Vector2D(1.0, 0.0)).AddTextureCoordinate(Vector2D(1.0, 1.0))
+        .AddIndex(0).AddIndex(1).AddIndex(2).AddIndex(2).AddIndex(3).AddIndex(0)
+        .AddIndex(4).AddIndex(5).AddIndex(6).AddIndex(6).AddIndex(7).AddIndex(4)
+        .AddIndex(8).AddIndex(9).AddIndex(10).AddIndex(10).AddIndex(11).AddIndex(8)
+        .AddIndex(12).AddIndex(13).AddIndex(14).AddIndex(14).AddIndex(15).AddIndex(12)
+        .AddIndex(16).AddIndex(17).AddIndex(18).AddIndex(18).AddIndex(19).AddIndex(16)
+        .AddIndex(20).AddIndex(21).AddIndex(22).AddIndex(22).AddIndex(23).AddIndex(20);
+    builder.Build();
 
-        start_point + width,
-        start_point + width + height,
-        start_point + width + height - depth,
-        start_point + width - depth,
-
-        start_point - depth,
-        start_point + height - depth,
-        start_point + height,
-        start_point,
-
-        start_point + width - depth,
-        start_point + width + height - depth,
-        start_point + height - depth,
-        start_point - depth,
-
-        start_point + height,
-        start_point + height - depth,
-        start_point + width + height - depth,
-        start_point + width + height,
-
-        start_point - depth,
-        start_point,
-        start_point + width,
-        start_point + width - depth,
-    };
-
-    auto *normals = new Vector3F[24] {
-        Vector3F(0.0, 0.0, 1.0),
-        Vector3F(0.0, 0.0, 1.0),
-        Vector3F(0.0, 0.0, 1.0),
-        Vector3F(0.0, 0.0, 1.0),
-
-        Vector3F(1.0, 0.0, 0.0),
-        Vector3F(1.0, 0.0, 0.0),
-        Vector3F(1.0, 0.0, 0.0),
-        Vector3F(1.0, 0.0, 0.0),
-
-        Vector3F(-1.0, 0.0, 0.0),
-        Vector3F(-1.0, 0.0, 0.0),
-        Vector3F(-1.0, 0.0, 0.0),
-        Vector3F(-1.0, 0.0, 0.0),
-
-        Vector3F(0.0, 0.0, -1.0),
-        Vector3F(0.0, 0.0, -1.0),
-        Vector3F(0.0, 0.0, -1.0),
-        Vector3F(0.0, 0.0, -1.0),
-
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 1.0, 0.0),
-        Vector3F(0.0, 1.0, 0.0),
-
-        Vector3F(0.0, -1.0, 0.0),
-        Vector3F(0.0, -1.0, 0.0),
-        Vector3F(0.0, -1.0, 0.0),
-        Vector3F(0.0, -1.0, 0.0),
-    };
-
-    auto textures = new Vector2F[24] {
-        Vector2F(0.0, 1.0),
-        Vector2F(0.0, 0.0),
-        Vector2F(1.0, 0.0),
-        Vector2F(1.0, 1.0),
-
-        Vector2F(0.0, 1.0),
-        Vector2F(0.0, 0.0),
-        Vector2F(1.0, 0.0),
-        Vector2F(1.0, 1.0),
-
-        Vector2F(0.0, 1.0),
-        Vector2F(0.0, 0.0),
-        Vector2F(1.0, 0.0),
-        Vector2F(1.0, 1.0),
-
-        Vector2F(0.0, 1.0),
-        Vector2F(0.0, 0.0),
-        Vector2F(1.0, 0.0),
-        Vector2F(1.0, 1.0),
-
-        Vector2F(0.0, 1.0),
-        Vector2F(0.0, 0.0),
-        Vector2F(1.0, 0.0),
-        Vector2F(1.0, 1.0),
-
-        Vector2F(0.0, 1.0),
-        Vector2F(0.0, 0.0),
-        Vector2F(1.0, 0.0),
-        Vector2F(1.0, 1.0),
-    };
-
-    auto indices = new GLuint[36] {
-        0, 1, 2, 2, 3, 0,
-        4, 5, 6, 6, 7, 4,
-        8, 9, 10, 10, 11,8,
-        12, 13, 14, 14, 15, 12,
-        16, 17, 18, 18, 19, 16,
-        20, 21, 22, 22, 23, 20
-    };
-
-    GeometryData geometry = {
-        24,
-        36,
-        vertices,
-        normals,
-        textures,
-        indices
-    };
-
-    GeometryMesh object(geometry);
-    return object;
+    return Mesh(builder.GetBuildResult());
 }
 
 GLuint RenderingSystem::CreateVertexArrayObject() {
@@ -184,8 +110,8 @@ GLuint RenderingSystem::CreateElementBuffer() {
 }
 
 void RenderingSystem::CreateGeometries() {
-    GeometryMesh obj = CreateCube();
-    geometry_objects.insert({MeshTypes::Cube, obj});
+    Mesh obj = CreateCube();
+    meshes.insert({MeshTypes::Cube, obj});
 }
 
 void RenderingSystem::CreateTextures() {

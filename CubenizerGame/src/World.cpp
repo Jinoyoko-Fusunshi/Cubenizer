@@ -13,7 +13,7 @@ void World::CreateCamera(Vector3F position, Viewport camera_viewport, float came
 
 void World::InitModels(RenderingSystem &render_system) {
     ShaderProgram program = render_system.GetShadersReference(0);
-    GeometryMesh object = render_system.GetMeshByType(MeshTypes::Cube);
+    Mesh object = render_system.GetMeshByType(MeshTypes::Cube);
     Texture texture = render_system.GetTextureByType(TextureTypes::Troll);
 
     for (uint32_t y_tile = 0; y_tile < tiles_height; y_tile++) {
@@ -104,7 +104,6 @@ void World::DrawModels() {
                 current_model.UpdateModelMatrix();
                 current_model.UpdateViewMatrix(camera.GetViewMatrix());
                 current_model.UpdateProjectionMatrix(camera.GetProjectionMatrix());
-                current_model.UpdateColor();
                 current_model.UpdateFaces(tile_face_ids, 6);
                 current_model.DrawModel();
             }
