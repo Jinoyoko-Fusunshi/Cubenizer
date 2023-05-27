@@ -6,6 +6,3 @@
 # linux binaries
 bin
 .o, .so, .a
-
-# IDE configurations
-.idea
