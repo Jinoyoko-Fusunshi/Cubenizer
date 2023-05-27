@@ -43,7 +43,7 @@ void ConvertToVertexData(GeometryData &geometry_reference, VertexData *vertex_da
     uint32_t normal_count = geometry_reference.indices_length;
 
     for (uint32_t i = 0u; i < normal_count; i++) {
-        auto screen_space_vertex = Camera::GetScreenTransformationMatrix() * geometry_reference.vertices[i];
+        auto screen_space_vertex = Camera::GetScreenTransformationMatrix() * Vector4F(geometry_reference.vertices[i], 1.0);
 
         VertexData data_set = { screen_space_vertex, geometry_reference.normals[i], geometry_reference.textures[i]};
         vertex_data_reference[i] = data_set;

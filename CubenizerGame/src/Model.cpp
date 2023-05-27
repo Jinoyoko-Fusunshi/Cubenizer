@@ -61,7 +61,7 @@ void Model::DrawModel() {
 }
 
 Matrix4F Model::GetModelMatrix() {
-    auto screen_space_position = Camera::GetScreenTransformationMatrix() * position;
+    auto screen_space_position = Camera::GetScreenTransformationMatrix() * Vector4F(position, 1.0);
 
     float elements[16] = {
         1.0, 0.0, 0.0, screen_space_position.GetX(),

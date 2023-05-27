@@ -31,7 +31,7 @@ void Camera::UpdateView() {
 
 void Camera::TranslateCamera(Vector3F translation) {
     auto rotation_matrix = Matrix4F::YRotationMatrix(FDegree(-yaw_angle));
-    auto view_direction_translation = rotation_matrix * translation;
+    auto view_direction_translation = rotation_matrix * Vector4F(translation, 1.0);
     position += view_direction_translation * camera_speed;
 }
 

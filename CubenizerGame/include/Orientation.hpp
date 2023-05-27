@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Vector3.hpp>
+#include <Vector4.hpp>
 #include <Matrix4.hpp>
 
 class Orientation {
@@ -25,7 +25,7 @@ public:
     Matrix4F GetRollRotation() { return roll_rotation; }
     Matrix4F GetRotation() { return pitch_rotation * yaw_rotation * roll_rotation; }
     Matrix4F GetTransformation();
-    Vector3F GetRightDirection() { return GetRotation() * Vector3F::XUnitVector3() * -1.0f; }
-    Vector3F GetTopDirection() { return GetRotation() * Vector3F::YUnitVector3() * -1.0f; }
-    Vector3F GetLookDirection() { return GetRotation() * Vector3F::ZUnitVector3() * -1.0f; }
+    Vector3F GetRightDirection() { return GetRotation() * Vector4F::XUnitVector4() * -1.0f; }
+    Vector3F GetTopDirection() { return GetRotation() * Vector4F::YUnitVector4() * -1.0f; }
+    Vector3F GetLookDirection() { return GetRotation() * Vector4F::ZUnitVector4() * -1.0f; }
 };
