@@ -42,36 +42,41 @@ void RenderingSystem::CreateShaders() {
 }
 
 GeometryMesh CreateCube() {
+    Vector3F start_point(0.0, 0.0, 0.0);
+    Vector3F width = Vector3F::XUnitVector3() * Model::ModelWidth;
+    Vector3F height = Vector3F::YUnitVector3() * Model::ModelWidth;
+    Vector3F depth = Vector3F::ZUnitVector3() * Model::ModelWidth;
+
     auto vertices = new Vector3F[24] {
-        Vector3F(200.0, 300.0, 0.0),
-        Vector3F(200.0, 400.0, 0.0),
-        Vector3F(300.0, 400.0, 0.0),
-        Vector3F(300.0, 300.0, 0.0),
+        start_point,
+        start_point + height,
+        start_point + width + height,
+        start_point + width,
 
-        Vector3F(300.0, 300.0, 0.0),
-        Vector3F(300.0, 400.0, 0.0),
-        Vector3F(300.0, 400.0, -100.0),
-        Vector3F(300.0, 300.0, -100.0),
+        start_point + width,
+        start_point + width + height,
+        start_point + width + height - depth,
+        start_point + width - depth,
 
-        Vector3F(200.0, 300.0, -100.0),
-        Vector3F(200.0, 400.0, -100.0),
-        Vector3F(200.0, 400.0, 0.0),
-        Vector3F(200.0, 300.0, 0.0),
+        start_point - depth,
+        start_point + height - depth,
+        start_point + height,
+        start_point,
 
-        Vector3F(300.0, 300.0, -100.0),
-        Vector3F(300.0, 400.0, -100.0),
-        Vector3F(200.0, 400.0, -100.0),
-        Vector3F(200.0, 300.0, -100.0),
+        start_point + width - depth,
+        start_point + width + height - depth,
+        start_point + height - depth,
+        start_point - depth,
 
-        Vector3F(200.0, 400.0, 0.0),
-        Vector3F(200.0, 400.0, -100.0),
-        Vector3F(300.0, 400.0, -100.0),
-        Vector3F(300.0, 400.0, 0.0),
+        start_point + height,
+        start_point + height - depth,
+        start_point + width + height - depth,
+        start_point + width + height,
 
-        Vector3F(200.0, 300.0, -100.0),
-        Vector3F(200.0, 300.0, 0.0),
-        Vector3F(300.0, 300.0, 0.0),
-        Vector3F(300.0, 300.0, -100.0),
+        start_point - depth,
+        start_point,
+        start_point + width,
+        start_point + width - depth,
     };
 
     auto *normals = new Vector3F[24] {

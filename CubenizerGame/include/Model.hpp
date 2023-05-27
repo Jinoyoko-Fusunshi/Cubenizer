@@ -16,6 +16,8 @@ private:
     ShaderProgram shader {};
 
 public:
+    static constexpr double ModelWidth = 400.0;
+
     explicit Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
     ~Model() = default;
 
