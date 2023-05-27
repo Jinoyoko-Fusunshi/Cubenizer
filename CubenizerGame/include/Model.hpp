@@ -3,22 +3,21 @@
 #include <Vector3.hpp>
 #include <Matrix4.hpp>
 #include "ShaderProgram.hpp"
-#include "GeometryMesh.hpp"
+#include "Mesh.hpp"
 #include "Texture.hpp"
 #include "TextureTypes.hpp"
 
 class Model {
 private:
-    Vector3F position {};
-    Vector3F color {};
+    Vector3D position {};
     Texture texture {};
-    GeometryMesh geometry {};
+    Mesh geometry {};
     ShaderProgram shader {};
 
 public:
     static constexpr double ModelWidth = 400.0;
 
-    explicit Model(Vector3F position, GeometryMesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
+    explicit Model(Vector3D position, Mesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
     ~Model() = default;
 
     void UpdateModelMatrix();

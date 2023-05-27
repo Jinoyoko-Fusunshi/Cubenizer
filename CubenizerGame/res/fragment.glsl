@@ -8,7 +8,6 @@ in vec2 textures_out;
 
 in mat4 model_matrix_out;
 in mat4 view_matrix_out;
-in vec3 model_color_out;
 in flat int neighbour_indices_out[6];
 in flat int face_index_out;
 

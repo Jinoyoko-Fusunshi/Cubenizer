@@ -6,7 +6,6 @@ out vec2 textures_out;
 
 out mat4 model_matrix_out;
 out mat4 view_matrix_out;
-out vec3 model_color_out;
 out flat int neighbour_indices_out[6];
 out flat int face_index_out;
 
@@ -28,7 +27,6 @@ void main() {
     textures_out = textures;
 
     model_matrix_out = model_matrix;
-    model_color_out = model_color;
     view_matrix_out = view_matrix;
 
     face_index_out = gl_VertexID / VerticesPerFace;
