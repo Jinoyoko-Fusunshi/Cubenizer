@@ -81,25 +81,25 @@ void World::DrawModels() {
                 int32_t tile_left_index = x_tile - 1;
                 int32_t tile_right_index = x_tile + 1;
 
-                int tile_face_ids[6] = {0, 0, 0, 0, 0, 0};
+                int tile_face_ids[Cube::CubeFaceCount] = {0, 0, 0, 0, 0, 0};
 
                 if (tile_bottom_index >= 0)
-                    tile_face_ids[5] = 1;
+                    tile_face_ids[(uint8_t)CubeFaces::Bottom] = 1;
 
                 if (tile_top_index < tiles_height)
-                    tile_face_ids[4] = 1;
+                    tile_face_ids[(uint8_t)CubeFaces::Top] = 1;
 
                 if (tile_left_index >= 0)
-                    tile_face_ids[2] = 1;
+                    tile_face_ids[(uint8_t)CubeFaces::Left] = 1;
 
                 if (tile_right_index < tiles_width)
-                    tile_face_ids[1] = 1;
+                    tile_face_ids[(uint8_t)CubeFaces::Right] = 1;
 
                 if (tile_back_index >= 0)
-                    tile_face_ids[0] = 1;
+                    tile_face_ids[(uint8_t)CubeFaces::Back] = 1;
 
                 if (tile_front_index < tiles_depth)
-                    tile_face_ids[3] = 1;
+                    tile_face_ids[(uint8_t)CubeFaces::Front] = 1;
 
                 current_model.UpdateModelMatrix();
                 current_model.UpdateViewMatrix(camera.GetViewMatrix());
