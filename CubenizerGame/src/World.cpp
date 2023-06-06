@@ -1,5 +1,7 @@
 #include "World.hpp"
+#include "Cube.hpp"
 #include "MeshTypes.hpp"
+#include "CubeFaces.hpp"
 
 World::World(uint32_t width, uint32_t depth, uint32_t height) {
     tiles_width = width;
@@ -7,25 +9,28 @@ World::World(uint32_t width, uint32_t depth, uint32_t height) {
     tiles_depth = depth;
 }
 
+World::~World() {
+    models.clear();
+}
+
 void World::CreateCamera(Vector3F position, Viewport camera_viewport, float camera_speed) {
     camera = Camera(position, camera_viewport, camera_speed);
 }
 
 void World::InitModels(RenderingSystem &render_system) {
-    ShaderProgram program = render_system.GetShadersReference(0);
-    Mesh object = render_system.GetMeshByType(MeshTypes::Cube);
-    Texture texture = render_system.GetTextureByType(TextureTypes::Troll);
+    ShaderProgram program = render_system.GetShadersReference(ShaderTypes::BasicCubeShader);
+    Mesh object = render_system.GetMeshByType(MeshTypes::CubeMesh);
+    Texture texture = render_system.GetTextureByType(TextureTypes::Water);
 
     for (uint32_t y_tile = 0; y_tile < tiles_height; y_tile++) {
         for (uint32_t z_tile = 0; z_tile < tiles_depth; z_tile++) {
             for (uint32_t x_tile = 0; x_tile < tiles_width; x_tile++) {
-                auto x_pos = 0.0f + (float)x_tile * Model::ModelWidth;
-                auto y_pos = 0.0f + (float)y_tile * Model::ModelWidth;
-                auto z_pos = 0.0f - (float)z_tile * Model::ModelWidth;
+                auto x_pos = (float)x_tile * Cube::ModelWidth;
+                auto y_pos = (float)y_tile * Cube::ModelWidth;
+                auto z_pos = -(float)z_tile * Cube::ModelWidth;
 
                 Vector3F position(x_pos, y_pos, z_pos);
-                Model model(position, object, program, texture);
-                models.emplace_back(model);
+                models.emplace_back(new Cube(position, object, program, texture));
             }
         }
     }
@@ -36,9 +41,9 @@ void World::DrawWorld() {
 }
 
 void World::DrawModels() {
-    auto x_tiles_amount = 20.0;
-    auto y_tiles_amount = 20.0;
-    auto z_tiles_amount = 20.0;
+    double x_tiles_amount = 20.0;
+    double y_tiles_amount = 20.0;
+    double z_tiles_amount = 20.0;
 
     auto y_tile_start = (int32_t)(-10.0 + camera.GetPosition().GetY());
     auto y_tile_end = (int32_t)(0.0 + camera.GetPosition().GetY() + y_tiles_amount);
@@ -72,7 +77,7 @@ void World::DrawModels() {
                 uint32_t tile_position = z_tile * tiles_width + x_tile;
                 uint32_t tile_index = tile_layer + tile_position;
 
-                Model current_model = models[tile_index];
+                Cube *current_model = dynamic_cast<Cube*>(models[tile_index].get());
 
                 int32_t tile_top_index = y_tile + 1;
                 int32_t tile_bottom_index = y_tile - 1;
@@ -101,11 +106,8 @@ void World::DrawModels() {
                 if (tile_front_index < tiles_depth)
                     tile_face_ids[(uint8_t)CubeFaces::Front] = 1;
 
-                current_model.UpdateModelMatrix();
-                current_model.UpdateViewMatrix(camera.GetViewMatrix());
-                current_model.UpdateProjectionMatrix(camera.GetProjectionMatrix());
-                current_model.UpdateFaces(tile_face_ids, 6);
-                current_model.DrawModel();
+                current_model->UpdateFaces(tile_face_ids);
+                current_model->DrawModel(camera.GetViewMatrix(), camera.GetProjectionMatrix());
             }
         }
     }

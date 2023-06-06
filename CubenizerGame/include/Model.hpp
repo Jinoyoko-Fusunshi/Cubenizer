@@ -9,24 +9,20 @@
 #include "RenderingSystem.hpp"
 
 class Model {
-private:
-    Vector3D position {};
+protected:
+    Vector3F position {};
     Texture texture {};
-    Mesh geometry {};
+    Mesh mesh {};
     ShaderProgram shader {};
 
 public:
-    static constexpr double ModelWidth = 400.0;
+    explicit Model(Vector3F position, Mesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference) : 
+        position(position), mesh(geometry_object_reference), shader(shader_reference), texture(texture_reference) {}
+    virtual ~Model() = default;
 
-    explicit Model(Vector3D position, Mesh &geometry_object_reference, ShaderProgram &shader_reference, Texture &texture_reference);
-    ~Model() = default;
+    virtual void DrawModel(const Matrix4F &view_matrix_reference, const Matrix4F &projection_matrix_reference) {}
 
-    void UpdateModelMatrix();
-    void UpdateViewMatrix(const Matrix4F &view_matrix_reference);
-    void UpdateProjectionMatrix(const Matrix4F &projection_matrix_reference);
-    void UpdateColor();
-    void UpdateFaces(const int* face_ids, int face_length);
-    void DrawModel();
+    void CreateGraphicalModel(RenderingSystem &renderer_reference);
 
     Matrix4F GetModelMatrix();
 };
