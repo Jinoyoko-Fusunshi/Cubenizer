@@ -1,5 +1,5 @@
 #pragma once
 
-enum MeshTypes {
-    Cube = 0
+enum class MeshTypes {
+    CubeMesh = 0
 };

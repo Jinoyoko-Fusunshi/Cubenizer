@@ -1,5 +1,6 @@
 #pragma once
 
-enum TextureTypes {
-    Troll = 0
+enum class TextureTypes {
+    None = 0,
+    Water = 1
 };
