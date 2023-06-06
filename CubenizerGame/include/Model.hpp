@@ -6,6 +6,7 @@
 #include "Mesh.hpp"
 #include "Texture.hpp"
 #include "TextureTypes.hpp"
+#include "RenderingSystem.hpp"
 
 class Model {
 private:

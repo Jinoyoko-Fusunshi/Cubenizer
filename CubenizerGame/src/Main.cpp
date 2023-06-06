@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "Window.hpp"
 #include "World.hpp"
-#include "Rendering.hpp"
+#include "RenderingSystem.hpp"
 
 using std::vector;
 

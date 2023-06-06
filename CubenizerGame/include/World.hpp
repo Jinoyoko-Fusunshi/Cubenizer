@@ -1,7 +1,7 @@
 #include <vector>
 #include "Model.hpp"
 #include "Camera.hpp"
-#include "Rendering.hpp"
+#include "RenderingSystem.hpp"
 
 class World {
 private:

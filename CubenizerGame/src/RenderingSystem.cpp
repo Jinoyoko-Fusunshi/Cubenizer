@@ -1,11 +1,12 @@
 #include <vector>
 #include <GL/glew.h>
-#include "Rendering.hpp"
-#include "Model.hpp"
-#include "Vector2.hpp"
+#include <Vector2.hpp>
+#include "RenderingSystem.hpp"
+#include "Cube.hpp"
 #include "TextureTypes.hpp"
 #include "MeshTypes.hpp"
 #include "MeshBuilder.hpp"
+#include "MeshFactory.hpp"
 
 using std::vector, std::string;
 
@@ -18,15 +19,16 @@ RenderingSystem::~RenderingSystem() {
     }
     meshes.clear();
 
-    for (auto texture_pair : geometry_textures) {
+    for (auto texture_pair : textures) {
         Texture texture = texture_pair.second;
         texture.Destroy();
     }
-    geometry_textures.clear();
+    textures.clear();
 
-    for (auto shader : shaders_programs)
+    for (auto shader_pair : shaders_programs) {
+        ShaderProgram shader = shader_pair.second;
         shader.Destroy();
-
+    }
     shaders_programs.clear();
 }
 
@@ -37,16 +39,15 @@ void RenderingSystem::CreateShaders() {
     };
 
     GLuint program_id = CreateShaderProgram(shader_infos);
-    shaders_programs.emplace_back(program_id);
-
+    shaders_programs.insert({ShaderTypes::BasicCubeShader, ShaderProgram(program_id)});
     shader_infos.clear();
 }
 
 Mesh CreateCube() {
     Vector3D start_point(0.0, 0.0, 0.0);
-    Vector3D width = Vector3D::XUnitVector3() * Model::ModelWidth;
-    Vector3D height = Vector3D::YUnitVector3() * Model::ModelWidth;
-    Vector3D depth = Vector3D::ZUnitVector3() * Model::ModelWidth;
+    Vector3D width = Vector3D::XUnitVector3() * Cube::ModelWidth;
+    Vector3D height = Vector3D::YUnitVector3() * Cube::ModelWidth;
+    Vector3D depth = Vector3D::ZUnitVector3() * Cube::ModelWidth;
 
     MeshBuilder builder {};
     builder
@@ -91,30 +92,10 @@ Mesh CreateCube() {
     return Mesh(builder.GetBuildResult());
 }
 
-GLuint RenderingSystem::CreateVertexArrayObject() {
-    GLuint vao = 0u;
-    glGenVertexArrays(1, &vao);
-    return vao;
-}
-
-GLuint RenderingSystem::CreateVertexBufferObject() {
-    GLuint vbo = 0u;
-    glGenBuffers(1, &vbo);
-    return vbo;
-}
-
-GLuint RenderingSystem::CreateElementBuffer() {
-    GLuint ebo = 0u;
-    glGenBuffers(1, &ebo);
-    return ebo;
-}
-
 void RenderingSystem::CreateGeometries() {
-    Mesh obj = CreateCube();
-    meshes.insert({MeshTypes::Cube, obj});
+    meshes.insert({MeshTypes::CubeMesh, MeshFactory::CreateCubeMesh(Cube::ModelWidth, Cube::ModelWidth, Cube::ModelWidth)});
 }
 
 void RenderingSystem::CreateTextures() {
-    Texture troll_texture("water.png");
-    geometry_textures.insert({TextureTypes::Troll, troll_texture});
+    textures.insert({TextureTypes::Water, Texture("water.png")});
 }
