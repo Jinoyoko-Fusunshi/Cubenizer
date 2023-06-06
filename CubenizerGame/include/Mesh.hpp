@@ -6,9 +6,9 @@
 class Mesh {
 private:
     uint32_t indices_length = 0;
-    GLuint vao_id = 0u;
-    GLuint vbo_id = 0u;
-    GLuint ebo_id = 0u;
+    GLuint vertex_array_id = 0u;
+    GLuint vertex_buffer_id = 0u;
+    GLuint element_buffer_id = 0u;
 
 public:
     Mesh() = default;
@@ -17,8 +17,8 @@ public:
 
     void Destroy();
 
-    [[nodiscard]] GLuint GetVAO() const { return vao_id; }
-    [[nodiscard]] GLuint GetVBO() const { return vbo_id; }
-    [[nodiscard]] GLuint GetEBO() const { return ebo_id; }
+    [[nodiscard]] GLuint GetVertexArrayID() const { return vertex_array_id; }
+    [[nodiscard]] GLuint GetVertexBufferID() const { return vertex_buffer_id; }
+    [[nodiscard]] GLuint GetElementBufferID() const { return element_buffer_id; }
     [[nodiscard]] uint32_t GetIndicesSize() const  { return indices_length; }
 };

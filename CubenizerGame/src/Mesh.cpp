@@ -1,6 +1,6 @@
 #include <vector>
 #include "Mesh.hpp"
-#include "Rendering.hpp"
+#include "BufferFactory.hpp"
 #include "ComposedVertex.hpp"
 #include "Camera.hpp"
 
@@ -10,15 +10,15 @@ vector<ComposedVertex> ConvertToVertexData(MeshData &geometry_reference);
 
 Mesh::Mesh(MeshData geometry_reference) {
     vector<ComposedVertex> vertices = ConvertToVertexData(geometry_reference);
-    vao_id = RenderingSystem::CreateVertexArrayObject();
-    vbo_id = RenderingSystem::CreateVertexBufferObject();
-    ebo_id = RenderingSystem::CreateElementBuffer();
+    vertex_array_id = BufferFactory::CreateVertexArrayObject();
+    vertex_buffer_id = BufferFactory::CreateVertexBufferObject();
+    element_buffer_id = BufferFactory::CreateElementBuffer();
     indices_length = (uint32_t)geometry_reference.indices.size();
 
-    glBindVertexArray(vao_id);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_id);
+    glBindVertexArray(vertex_array_id);
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id);
     glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)(sizeof(ComposedVertex) * geometry_reference.vertices.size()), vertices.data(), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_id);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer_id);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)(sizeof(GLuint) * geometry_reference.indices.size()), geometry_reference.indices.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ComposedVertex), (void*)nullptr);
@@ -33,8 +33,8 @@ Mesh::Mesh(MeshData geometry_reference) {
 }
 
 void Mesh::Destroy() {
-    glDeleteBuffers(1, &vbo_id);
-    glDeleteVertexArrays(1, &vao_id);
+    glDeleteBuffers(1, &vertex_buffer_id);
+    glDeleteVertexArrays(1, &vertex_array_id);
 }
 
 vector<ComposedVertex> ConvertToVertexData(MeshData &geometry_reference) {
