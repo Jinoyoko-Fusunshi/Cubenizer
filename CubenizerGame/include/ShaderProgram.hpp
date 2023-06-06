@@ -17,8 +17,9 @@ public:
 
     void Destroy() const;
 
-    void SetVector3fUniformData(const std::string& uniform_name, const Vector3F &data_reference) const;
-    void SetMatrix4fUniformData(const std::string& uniform_name, const Matrix4F &data_reference) const;
+    void SetVector3fUniformData(const std::string& uniform_name, const Vector3F &data_reference);
+    void SetMatrix4fUniformData(const std::string& uniform_name, const Matrix4F &data_reference);
+    void SetIntegerArray(const std::string& uniform_name, const int *data, uint32_t data_length);
 
     [[nodiscard]] GLuint GetProgramID() const { return program_id; }
 };
